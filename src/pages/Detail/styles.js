@@ -32,3 +32,7 @@ export const BottomTitle = styled.Text`
     font-size: 20px;
     color: ${colors.key};
 `;
+
+export const Chain = styled.View`
+    flex-direction: row;
+`;

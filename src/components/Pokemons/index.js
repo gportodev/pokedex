@@ -1,163 +1,160 @@
+/* eslint-disable prefer-template */
 /* eslint-disable prefer-const */
 import React, { useEffect, useState } from 'react';
 
-import { Alert } from 'react-native';
-import { List } from './styles';
+import { Feather } from '@expo/vector-icons';
 
-import { Card, Avatar, Line, Data, Info } from '../Card/styles';
+import { Alert } from 'react-native';
+import { List, Search, IconComponent, InComponent } from './styles';
+
+import { Card, Avatar, Tag, Line, Data, Info } from '../Card/styles';
 
 import api from '../../services/api';
+import colors from '../../style/colors';
 
 export default function Pokemons({ navigation }) {
-    const [pokemon, setPokemon] = useState([]);
     const [poke, setPoke] = useState([]);
-
-    async function loadNames() {
-        try {
-            const response = await api.get('pokemon?limit=2&offset=2.');
-
-            const res = await response.data.results;
-
-            setPokemon(res);
-        } catch (error) {
-            Alert.alert('Error!Could not load data!');
-        }
-    }
-
-    async function loadRest(p) {
-        const response = await api.get(`pokemon/${p.name}`);
-
-        let { id, name, height, weight, types, sprites, stats } = response.data;
-
-        let pok = {
-            i: id,
-            n: name,
-            h: height,
-            w: weight,
-            t: types[0].type.name,
-            s: sprites.front_default,
-            hp: stats[0].base_stat,
-            atk: stats[1].base_stat,
-            def: stats[2].base_stat,
-            spd: stats[3].base_stat,
-        };
-
-        poke.push(pok);
-
-        console.log(pok);
-    }
+    const [wantedPokemon, setWantedpokemon] = useState();
 
     async function loadData() {
-        await pokemon.map((p) => loadRest(p));
+        const response = await api.get('pokemon');
+
+        const { results } = response.data;
+
+        results.forEach(async (r) => {
+            const res = await api.get(`pokemon/${r.name}`);
+
+            let { id, name, height, weight, types, sprites, stats } = res.data;
+
+            if (res.data) {
+                let pok = {
+                    i: String(id),
+                    n: name,
+                    h: height,
+                    w: weight,
+                    t: types[0].type.name,
+                    s: sprites.front_default,
+                    hp: stats[0].base_stat,
+                    atk: stats[1].base_stat,
+                    def: stats[2].base_stat,
+                    spd: stats[3].base_stat,
+                };
+
+                setPoke((state) => [...state, pok]);
+            }
+        });
     }
 
     useEffect(() => {
-        loadNames();
         loadData();
     }, []);
 
-    // const renderItem = ({ item }) => (
-    //     <Card onPress={() => navigation.navigate('Detail', { item })}>
-    //         <Avatar source={{ uri: item.s }} />
-    //         <Line>
-    //             <Info
-    //                 style={{
-    //                     fontSize: 16,
-    //                     fontFamily: 'RobotoSlab_400Regular',
-    //                 }}
-    //             >
-    //                 Name:
-    //             </Info>
+    const renderItem = ({ item }) => (
+        <Card onPress={() => navigation.navigate('Detail', { item })}>
+            <Tag>
+                <Info
+                    style={{
+                        fontSize: 15,
+                        color: colors.num,
+                    }}
+                >
+                    # {item.i}
+                </Info>
 
-    //             <Data
-    //                 style={{
-    //                     fontSize: 16,
-    //                     fontFamily: 'RobotoSlab_600SemiBold',
-    //                     left: 5,
-    //                 }}
-    //             >
-    //                 {item.n}
-    //             </Data>
-    //         </Line>
+                <Avatar source={{ uri: item.s }} />
+            </Tag>
 
-    //         <Line>
-    //             <Info
-    //                 style={{
-    //                     fontSize: 14,
-    //                     fontFamily: 'RobotoSlab_400Regular',
-    //                 }}
-    //             >
-    //                 Types:
-    //             </Info>
+            <Line>
+                <Info
+                    style={{
+                        fontSize: 16,
+                        fontFamily: 'RobotoSlab_400Regular',
+                    }}
+                >
+                    Name:
+                </Info>
 
-    //             <Data
-    //                 style={{
-    //                     fontSize: 14,
-    //                     fontFamily: 'RobotoSlab_600SemiBold',
-    //                     left: 5,
-    //                 }}
-    //             >
-    //                 {item.t}
-    //             </Data>
-    //         </Line>
-    //     </Card>
-    // );
+                <Data
+                    style={{
+                        fontSize: 16,
+                        fontFamily: 'RobotoSlab_600SemiBold',
+                        left: 5,
+                    }}
+                >
+                    {item.n}
+                </Data>
+            </Line>
+
+            <Line>
+                <Info
+                    style={{
+                        fontSize: 14,
+                        fontFamily: 'RobotoSlab_400Regular',
+                    }}
+                >
+                    Types:
+                </Info>
+
+                <Data
+                    style={{
+                        fontSize: 14,
+                        fontFamily: 'RobotoSlab_600SemiBold',
+                        left: 5,
+                    }}
+                >
+                    {item.t}
+                </Data>
+            </Line>
+        </Card>
+    );
+
+    const searchPoke = () => {
+        console.log(wantedPokemon);
+        if (wantedPokemon === undefined) {
+            Alert.alert('Type the pokemon name!');
+        } else {
+            poke.forEach((p) => {
+                if (p.n === wantedPokemon) {
+                    navigation.navigate('Detail', { item: p });
+                }
+            });
+        }
+    };
+
+    if (poke) {
+        poke.sort((a, b) => a.i - b.i);
+    }
 
     return (
-        <List
-            data={poke}
-            renderItem={({ item }) => (
-                <Card onPress={() => navigation.navigate('Detail', { item })}>
-                    <Avatar source={{ uri: item.s }} />
-                    <Line>
-                        <Info
-                            style={{
-                                fontSize: 16,
-                                fontFamily: 'RobotoSlab_400Regular',
-                            }}
-                        >
-                            Name:
-                        </Info>
+        <>
+            <Search>
+                <IconComponent onPress={searchPoke}>
+                    <Feather name="search" size={20} color={colors.num} />
+                </IconComponent>
+                <InComponent
+                    placeholder="Type the pokémon name"
+                    placeholderTextColor={colors.num}
+                    style={{
+                        fontFamily: 'RobotoSlab_400Regular',
+                        color: 'white',
+                    }}
+                    autoCorrect={false}
+                    autoCapitalize="none"
+                    onChangeText={(text) => setWantedpokemon(text)}
+                    value={wantedPokemon}
+                />
+            </Search>
 
-                        <Data
-                            style={{
-                                fontSize: 16,
-                                fontFamily: 'RobotoSlab_600SemiBold',
-                                left: 5,
-                            }}
-                        >
-                            {item.n}
-                        </Data>
-                    </Line>
-
-                    <Line>
-                        <Info
-                            style={{
-                                fontSize: 14,
-                                fontFamily: 'RobotoSlab_400Regular',
-                            }}
-                        >
-                            Types:
-                        </Info>
-
-                        <Data
-                            style={{
-                                fontSize: 14,
-                                fontFamily: 'RobotoSlab_600SemiBold',
-                                left: 5,
-                            }}
-                        >
-                            {item.t}
-                        </Data>
-                    </Line>
-                </Card>
-            )}
-            keyExtractor={(item) => item.i}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={{
-                alignItems: 'center',
-            }}
-            numColumns={2}
-        />
+            <List
+                data={poke}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.i}
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={{
+                    alignItems: 'center',
+                }}
+                numColumns={2}
+            />
+        </>
     );
 }

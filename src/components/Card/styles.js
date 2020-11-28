@@ -11,6 +11,10 @@ export const Card = styled.TouchableOpacity`
     margin: 5px;
 `;
 
+export const Tag = styled.View`
+    flex-direction: row;
+`;
+
 export const Avatar = styled.Image`
     width: 60px;
     height: 60px;
@@ -25,8 +29,10 @@ export const Line = styled.View`
 
 export const Info = styled.Text`
     color: ${colors.key};
+    text-transform: capitalize;
 `;
 
 export const Data = styled.Text`
     color: ${colors.value};
+    text-transform: capitalize;
 `;
