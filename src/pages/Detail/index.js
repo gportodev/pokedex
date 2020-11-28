@@ -189,7 +189,7 @@ export default function Detail({ route, navigation }) {
         }
 
         if (item.i >= 7 && item.i <= 9) {
-            const response = await api.get(`evolution-chain/${2}`);
+            const response = await api.get(`evolution-chain/${3}`);
 
             const { chain } = response.data;
 
