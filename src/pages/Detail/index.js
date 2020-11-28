@@ -754,7 +754,7 @@ export default function Detail({ route, navigation }) {
                 <Chain>
                     {evolution.map((e) => (
                         <Card
-                            key={e.id}
+                            key={e.i}
                             onPress={() =>
                                 navigation.replace('Detail', { item: e })
                             }

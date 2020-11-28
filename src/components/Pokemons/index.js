@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-boolean-value */
 /* eslint-disable prefer-template */
 /* eslint-disable prefer-const */
 import React, { useEffect, useState } from 'react';
@@ -109,15 +110,16 @@ export default function Pokemons({ navigation }) {
     );
 
     const searchPoke = () => {
-        console.log(wantedPokemon);
-        if (wantedPokemon === undefined) {
+        if (!wantedPokemon) {
             Alert.alert('Type the pokemon name!');
         } else {
-            poke.forEach((p) => {
-                if (p.n === wantedPokemon) {
-                    navigation.navigate('Detail', { item: p });
-                }
-            });
+            const look = poke.find((p) => p.n === wantedPokemon);
+
+            if (look) {
+                navigation.navigate('Detail', { item: look });
+            } else {
+                Alert.alert('Could not find the pokemon!');
+            }
         }
     };
 
@@ -142,6 +144,7 @@ export default function Pokemons({ navigation }) {
                     autoCapitalize="none"
                     onChangeText={(text) => setWantedpokemon(text)}
                     value={wantedPokemon}
+                    onSubmitEditing={searchPoke}
                 />
             </Search>
 
