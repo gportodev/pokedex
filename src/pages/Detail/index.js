@@ -804,7 +804,7 @@ export default function Detail({ route, navigation }) {
                             style={{
                                 left: 10,
                             }}
-                            progress={0.5}
+                            progress={item.hp / 100}
                             color={colors.value}
                             unfilledColor={colors.probar}
                         />
@@ -831,7 +831,7 @@ export default function Detail({ route, navigation }) {
                             style={{
                                 left: 10,
                             }}
-                            progress={0.73}
+                            progress={item.atk / 100}
                             color={colors.value}
                             unfilledColor={colors.probar}
                         />
@@ -858,7 +858,7 @@ export default function Detail({ route, navigation }) {
                             style={{
                                 left: 10,
                             }}
-                            progress={0.3}
+                            progress={item.def / 100}
                             color={colors.value}
                             unfilledColor={colors.probar}
                         />
@@ -885,7 +885,7 @@ export default function Detail({ route, navigation }) {
                             style={{
                                 left: 10,
                             }}
-                            progress={0.56}
+                            progress={item.spd / 100}
                             color={colors.value}
                             unfilledColor={colors.probar}
                         />
