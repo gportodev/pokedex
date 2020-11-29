@@ -33,6 +33,8 @@ import api from '../../services/api';
 export default function Detail({ route, navigation }) {
     const { item } = route.params;
 
+    console.log(item);
+
     const [evolution, setEvolution] = useState([]);
 
     async function loadEvolution() {
@@ -55,6 +57,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -62,6 +68,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -77,6 +87,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -84,6 +98,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -99,6 +117,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -106,6 +128,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -131,6 +157,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -138,6 +168,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -153,6 +187,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -160,6 +198,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -175,6 +217,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -182,6 +228,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -207,6 +257,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -214,6 +268,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -229,6 +287,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -236,6 +298,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -251,6 +317,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -258,8 +328,11 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
-
                 setEvolution([evo1, evo2]);
             }
         }
@@ -282,6 +355,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -289,6 +366,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -304,6 +385,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -311,6 +396,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -326,6 +415,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -333,6 +426,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -358,6 +455,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -365,8 +466,11 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
-
                 setEvolution([evo1, evo2]);
             }
 
@@ -380,6 +484,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -387,6 +495,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -402,6 +514,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -409,6 +525,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -434,6 +554,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -441,6 +565,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -456,6 +584,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -463,8 +595,11 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
-
                 setEvolution([evo1, evo2]);
             }
 
@@ -478,6 +613,10 @@ export default function Detail({ route, navigation }) {
                     n: res1.data.name,
                     t: res1.data.types[0].type.name,
                     s: res1.data.sprites.front_default,
+                    hp: res1.data.stats[0].base_stat,
+                    atk: res1.data.stats[1].base_stat,
+                    def: res1.data.stats[2].base_stat,
+                    spd: res1.data.stats[3].base_stat,
                 };
 
                 let evo2 = {
@@ -485,6 +624,10 @@ export default function Detail({ route, navigation }) {
                     n: res2.data.name,
                     t: res2.data.types[0].type.name,
                     s: res2.data.sprites.front_default,
+                    hp: res2.data.stats[0].base_stat,
+                    atk: res2.data.stats[1].base_stat,
+                    def: res2.data.stats[2].base_stat,
+                    spd: res2.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo1, evo2]);
@@ -507,6 +650,10 @@ export default function Detail({ route, navigation }) {
                     n: res.data.name,
                     t: res.data.types[0].type.name,
                     s: res.data.sprites.front_default,
+                    hp: res.data.stats[0].base_stat,
+                    atk: res.data.stats[1].base_stat,
+                    def: res.data.stats[2].base_stat,
+                    spd: res.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo]);
