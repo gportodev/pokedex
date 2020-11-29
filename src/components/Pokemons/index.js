@@ -33,7 +33,7 @@ export default function Pokemons({ navigation }) {
                     n: name,
                     h: height,
                     w: weight,
-                    t: types[0].type.name,
+                    t: types,
                     s: sprites.front_default,
                     hp: stats[0].base_stat,
                     atk: stats[1].base_stat,
@@ -95,16 +95,27 @@ export default function Pokemons({ navigation }) {
                 >
                     Types:
                 </Info>
-
-                <Data
-                    style={{
-                        fontSize: 14,
-                        fontFamily: 'RobotoSlab_600SemiBold',
-                        left: 5,
-                    }}
-                >
-                    {item.t}
-                </Data>
+                {item.t.length > 1 ? (
+                    <Data
+                        style={{
+                            fontSize: 14,
+                            fontFamily: 'RobotoSlab_600SemiBold',
+                            left: 5,
+                        }}
+                    >
+                        {item.t[0].type.name},{item.t[1].type.name}
+                    </Data>
+                ) : (
+                    <Data
+                        style={{
+                            fontSize: 14,
+                            fontFamily: 'RobotoSlab_600SemiBold',
+                            left: 5,
+                        }}
+                    >
+                        {item.t[0].type.name}
+                    </Data>
+                )}
             </Line>
         </Card>
     );

@@ -33,8 +33,6 @@ import api from '../../services/api';
 export default function Detail({ route, navigation }) {
     const { item } = route.params;
 
-    console.log(item);
-
     const [evolution, setEvolution] = useState([]);
 
     async function loadEvolution() {
@@ -55,7 +53,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -66,7 +64,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -85,7 +83,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -96,7 +94,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -115,7 +113,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -126,7 +124,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -155,7 +153,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -166,7 +164,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -185,7 +183,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -196,7 +194,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -215,7 +213,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -226,7 +224,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -255,7 +253,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -266,7 +264,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -285,7 +283,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -296,7 +294,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -315,7 +313,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -326,7 +324,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -353,7 +351,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -364,7 +362,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -383,7 +381,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -394,7 +392,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -413,7 +411,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -424,7 +422,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -453,7 +451,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -464,7 +462,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -482,7 +480,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -493,7 +491,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -512,7 +510,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -523,7 +521,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -552,7 +550,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -563,7 +561,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -582,7 +580,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -593,7 +591,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -611,7 +609,7 @@ export default function Detail({ route, navigation }) {
                 let evo1 = {
                     i: String(res1.data.id),
                     n: res1.data.name,
-                    t: res1.data.types[0].type.name,
+                    t: res1.data.types,
                     s: res1.data.sprites.front_default,
                     hp: res1.data.stats[0].base_stat,
                     atk: res1.data.stats[1].base_stat,
@@ -622,7 +620,7 @@ export default function Detail({ route, navigation }) {
                 let evo2 = {
                     i: String(res2.data.id),
                     n: res2.data.name,
-                    t: res2.data.types[0].type.name,
+                    t: res2.data.types,
                     s: res2.data.sprites.front_default,
                     hp: res2.data.stats[0].base_stat,
                     atk: res2.data.stats[1].base_stat,
@@ -648,7 +646,7 @@ export default function Detail({ route, navigation }) {
                 let evo = {
                     i: String(res.data.id),
                     n: res.data.name,
-                    t: res.data.types[0].type.name,
+                    t: res.data.types,
                     s: res.data.sprites.front_default,
                     hp: res.data.stats[0].base_stat,
                     atk: res.data.stats[1].base_stat,
@@ -932,22 +930,35 @@ export default function Detail({ route, navigation }) {
                             <Line>
                                 <Info
                                     style={{
-                                        fontSize: 10,
+                                        fontSize: 12,
                                         fontFamily: 'RobotoSlab_400Regular',
                                     }}
                                 >
                                     Types:
                                 </Info>
-
-                                <Data
-                                    style={{
-                                        fontSize: 10,
-                                        fontFamily: 'RobotoSlab_600SemiBold',
-                                        left: 5,
-                                    }}
-                                >
-                                    {e.t}
-                                </Data>
+                                {e.t.length === 2 ? (
+                                    <Data
+                                        style={{
+                                            fontSize: 14,
+                                            fontFamily:
+                                                'RobotoSlab_600SemiBold',
+                                            left: 5,
+                                        }}
+                                    >
+                                        {e.t[0].type.name},{e.t[1].type.name}
+                                    </Data>
+                                ) : (
+                                    <Data
+                                        style={{
+                                            fontSize: 14,
+                                            fontFamily:
+                                                'RobotoSlab_600SemiBold',
+                                            left: 5,
+                                        }}
+                                    >
+                                        {e.t[0].type.name}
+                                    </Data>
+                                )}
                             </Line>
                         </Card>
                     ))}
