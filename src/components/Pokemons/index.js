@@ -110,10 +110,12 @@ export default function Pokemons({ navigation }) {
     );
 
     const searchPoke = () => {
-        if (!wantedPokemon) {
+        let convert = String(wantedPokemon).toLowerCase();
+
+        if (!convert) {
             Alert.alert('Type the pokemon name!');
         } else {
-            const look = poke.find((p) => p.n === wantedPokemon);
+            const look = poke.find((p) => p.n === convert);
 
             if (look) {
                 navigation.navigate('Detail', { item: look });
