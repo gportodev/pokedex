@@ -36,642 +36,146 @@ export default function Detail({ route, navigation }) {
     const [evolution, setEvolution] = useState([]);
 
     async function loadEvolution() {
-        if (item.i >= 1 && item.i <= 3) {
-            const response = await api.get(`evolution-chain/${1}`);
-
-            const { chain } = response.data;
-
-            let e1 = chain.species.name;
-            let e2 = chain.evolves_to[0].species.name;
-            let e3 = chain.evolves_to[0].evolves_to[0].species.name;
-
-            if (item.n === e1) {
-                const res1 = await api.get(`pokemon/${e2}`);
-
-                const res2 = await api.get(`pokemon/${e3}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-
-            if (item.n === e2) {
-                const res1 = await api.get(`pokemon/${e1}`);
-
-                const res2 = await api.get(`pokemon/${e3}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-
-            if (item.n === e3) {
-                const res1 = await api.get(`pokemon/${e1}`);
-
-                const res2 = await api.get(`pokemon/${e2}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-        }
-
-        if (item.i >= 4 && item.i <= 6) {
-            const response = await api.get(`evolution-chain/${2}`);
-
-            const { chain } = response.data;
-
-            let e1 = chain.species.name;
-            let e2 = chain.evolves_to[0].species.name;
-            let e3 = chain.evolves_to[0].evolves_to[0].species.name;
-
-            if (item.n === e1) {
-                const res1 = await api.get(`pokemon/${e2}`);
-
-                const res2 = await api.get(`pokemon/${e3}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-
-            if (item.n === e2) {
-                const res1 = await api.get(`pokemon/${e1}`);
-
-                const res2 = await api.get(`pokemon/${e3}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-
-            if (item.n === e3) {
-                const res1 = await api.get(`pokemon/${e1}`);
-
-                const res2 = await api.get(`pokemon/${e2}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-        }
-
-        if (item.i >= 7 && item.i <= 9) {
-            const response = await api.get(`evolution-chain/${3}`);
-
-            const { chain } = response.data;
-
-            let e1 = chain.species.name;
-            let e2 = chain.evolves_to[0].species.name;
-            let e3 = chain.evolves_to[0].evolves_to[0].species.name;
-
-            if (item.n === e1) {
-                const res1 = await api.get(`pokemon/${e2}`);
-
-                const res2 = await api.get(`pokemon/${e3}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-
-            if (item.n === e2) {
-                const res1 = await api.get(`pokemon/${e1}`);
-
-                const res2 = await api.get(`pokemon/${e3}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-
-            if (item.n === e3) {
-                const res1 = await api.get(`pokemon/${e1}`);
-
-                const res2 = await api.get(`pokemon/${e2}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-                setEvolution([evo1, evo2]);
-            }
-        }
-        if (item.i >= 10 && item.i <= 12) {
-            const response = await api.get(`evolution-chain/${4}`);
-
-            const { chain } = response.data;
-
-            let e1 = chain.species.name;
-            let e2 = chain.evolves_to[0].species.name;
-            let e3 = chain.evolves_to[0].evolves_to[0].species.name;
-
-            if (item.n === e1) {
-                const res1 = await api.get(`pokemon/${e2}`);
-
-                const res2 = await api.get(`pokemon/${e3}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-
-            if (item.n === e2) {
-                const res1 = await api.get(`pokemon/${e1}`);
-
-                const res2 = await api.get(`pokemon/${e3}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-
-            if (item.n === e3) {
-                const res1 = await api.get(`pokemon/${e1}`);
-
-                const res2 = await api.get(`pokemon/${e2}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-        }
-
-        if (item.i >= 13 && item.i <= 15) {
-            const response = await api.get(`evolution-chain/${5}`);
-
-            const { chain } = response.data;
-
-            let e1 = chain.species.name;
-            let e2 = chain.evolves_to[0].species.name;
-            let e3 = chain.evolves_to[0].evolves_to[0].species.name;
-
-            if (item.n === e1) {
-                const res1 = await api.get(`pokemon/${e2}`);
-
-                const res2 = await api.get(`pokemon/${e3}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-                setEvolution([evo1, evo2]);
-            }
-
-            if (item.n === e2) {
-                const res1 = await api.get(`pokemon/${e1}`);
-
-                const res2 = await api.get(`pokemon/${e3}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-
-            if (item.n === e3) {
-                const res1 = await api.get(`pokemon/${e1}`);
-
-                const res2 = await api.get(`pokemon/${e2}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-        }
-
-        if (item.i >= 16 && item.i <= 18) {
-            const response = await api.get(`evolution-chain/${6}`);
-
-            const { chain } = response.data;
-
-            let e1 = chain.species.name;
-            let e2 = chain.evolves_to[0].species.name;
-            let e3 = chain.evolves_to[0].evolves_to[0].species.name;
-
-            if (item.n === e1) {
-                const res1 = await api.get(`pokemon/${e2}`);
-
-                const res2 = await api.get(`pokemon/${e3}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-
-            if (item.n === e2) {
-                const res1 = await api.get(`pokemon/${e1}`);
-
-                const res2 = await api.get(`pokemon/${e3}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-                setEvolution([evo1, evo2]);
-            }
-
-            if (item.n === e3) {
-                const res1 = await api.get(`pokemon/${e1}`);
-
-                const res2 = await api.get(`pokemon/${e2}`);
-
-                let evo1 = {
-                    i: String(res1.data.id),
-                    n: res1.data.name,
-                    t: res1.data.types,
-                    s: res1.data.sprites.front_default,
-                    hp: res1.data.stats[0].base_stat,
-                    atk: res1.data.stats[1].base_stat,
-                    def: res1.data.stats[2].base_stat,
-                    spd: res1.data.stats[3].base_stat,
-                };
-
-                let evo2 = {
-                    i: String(res2.data.id),
-                    n: res2.data.name,
-                    t: res2.data.types,
-                    s: res2.data.sprites.front_default,
-                    hp: res2.data.stats[0].base_stat,
-                    atk: res2.data.stats[1].base_stat,
-                    def: res2.data.stats[2].base_stat,
-                    spd: res2.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo1, evo2]);
-            }
-        }
-
-        if (item.i >= 19 && item.i <= 20) {
-            const response = await api.get(`evolution-chain/${7}`);
-
-            const { chain } = response.data;
-
-            let e1 = chain.species.name;
-            let e2 = chain.evolves_to[0].species.name;
-
-            if (item.n === e1) {
-                const res = await api.get(`pokemon/${e2}`);
-
-                let evo = {
-                    i: String(res.data.id),
-                    n: res.data.name,
-                    t: res.data.types,
-                    s: res.data.sprites.front_default,
-                    hp: res.data.stats[0].base_stat,
-                    atk: res.data.stats[1].base_stat,
-                    def: res.data.stats[2].base_stat,
-                    spd: res.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo]);
-            }
-
-            if (item.n === e2) {
-                const res = await api.get(`pokemon/${e1}`);
-
-                let evo = {
-                    i: String(res.data.id),
-                    n: res.data.name,
-                    t: res.data.types,
-                    s: res.data.sprites.front_default,
-                    hp: res.data.stats[0].base_stat,
-                    atk: res.data.stats[1].base_stat,
-                    def: res.data.stats[2].base_stat,
-                    spd: res.data.stats[3].base_stat,
-                };
-
-                setEvolution([evo]);
+        const poke_specie = await api.get(`pokemon-species/${item.n}`);
+
+        let poke_chain = poke_specie.data.evolution_chain;
+
+        const tree = await api.get(`${poke_chain.url}`);
+
+        const { chain } = tree.data;
+
+        const { species, evolves_to } = chain;
+
+        let e1 = species.name;
+
+        if (evolves_to.length > 0) {
+            let e2 = evolves_to[0].species.name;
+
+            if (evolves_to[0].evolves_to.length > 0) {
+                let e3 = chain.evolves_to[0].evolves_to[0].species.name;
+
+                if (item.n === e1) {
+                    const res1 = await api.get(`pokemon/${e2}`);
+
+                    const res2 = await api.get(`pokemon/${e3}`);
+
+                    let evo1 = {
+                        i: String(res1.data.id),
+                        n: res1.data.name,
+                        t: res1.data.types,
+                        s: res1.data.sprites.front_default,
+                        hp: res1.data.stats[0].base_stat,
+                        atk: res1.data.stats[1].base_stat,
+                        def: res1.data.stats[2].base_stat,
+                        spd: res1.data.stats[3].base_stat,
+                    };
+
+                    let evo2 = {
+                        i: String(res2.data.id),
+                        n: res2.data.name,
+                        t: res2.data.types,
+                        s: res2.data.sprites.front_default,
+                        hp: res2.data.stats[0].base_stat,
+                        atk: res2.data.stats[1].base_stat,
+                        def: res2.data.stats[2].base_stat,
+                        spd: res2.data.stats[3].base_stat,
+                    };
+
+                    setEvolution([evo1, evo2]);
+                }
+
+                if (item.n === e2) {
+                    const res1 = await api.get(`pokemon/${e1}`);
+
+                    const res2 = await api.get(`pokemon/${e3}`);
+
+                    let evo1 = {
+                        i: String(res1.data.id),
+                        n: res1.data.name,
+                        t: res1.data.types,
+                        s: res1.data.sprites.front_default,
+                        hp: res1.data.stats[0].base_stat,
+                        atk: res1.data.stats[1].base_stat,
+                        def: res1.data.stats[2].base_stat,
+                        spd: res1.data.stats[3].base_stat,
+                    };
+
+                    let evo2 = {
+                        i: String(res2.data.id),
+                        n: res2.data.name,
+                        t: res2.data.types,
+                        s: res2.data.sprites.front_default,
+                        hp: res2.data.stats[0].base_stat,
+                        atk: res2.data.stats[1].base_stat,
+                        def: res2.data.stats[2].base_stat,
+                        spd: res2.data.stats[3].base_stat,
+                    };
+
+                    setEvolution([evo1, evo2]);
+                }
+
+                if (item.n === e3) {
+                    const res1 = await api.get(`pokemon/${e1}`);
+
+                    const res2 = await api.get(`pokemon/${e2}`);
+
+                    let evo1 = {
+                        i: String(res1.data.id),
+                        n: res1.data.name,
+                        t: res1.data.types,
+                        s: res1.data.sprites.front_default,
+                        hp: res1.data.stats[0].base_stat,
+                        atk: res1.data.stats[1].base_stat,
+                        def: res1.data.stats[2].base_stat,
+                        spd: res1.data.stats[3].base_stat,
+                    };
+
+                    let evo2 = {
+                        i: String(res2.data.id),
+                        n: res2.data.name,
+                        t: res2.data.types,
+                        s: res2.data.sprites.front_default,
+                        hp: res2.data.stats[0].base_stat,
+                        atk: res2.data.stats[1].base_stat,
+                        def: res2.data.stats[2].base_stat,
+                        spd: res2.data.stats[3].base_stat,
+                    };
+
+                    setEvolution([evo1, evo2]);
+                }
+            } else {
+                console.log('ENTROUUU AQUI');
+                if (item.n === e1) {
+                    const res = await api.get(`pokemon/${e2}`);
+
+                    let evo = {
+                        i: String(res.data.id),
+                        n: res.data.name,
+                        t: res.data.types,
+                        s: res.data.sprites.front_default,
+                        hp: res.data.stats[0].base_stat,
+                        atk: res.data.stats[1].base_stat,
+                        def: res.data.stats[2].base_stat,
+                        spd: res.data.stats[3].base_stat,
+                    };
+
+                    setEvolution([evo]);
+                } else {
+                    const res = await api.get(`pokemon/${e1}`);
+
+                    let evo = {
+                        i: String(res.data.id),
+                        n: res.data.name,
+                        t: res.data.types,
+                        s: res.data.sprites.front_default,
+                        hp: res.data.stats[0].base_stat,
+                        atk: res.data.stats[1].base_stat,
+                        def: res.data.stats[2].base_stat,
+                        spd: res.data.stats[3].base_stat,
+                    };
+
+                    setEvolution([evo]);
+                }
             }
         }
     }
@@ -900,6 +404,7 @@ export default function Detail({ route, navigation }) {
 
             <BottomHeader>
                 <BottomTitle>Family tree</BottomTitle>
+                {console.log(evolution)}
                 <Chain>
                     {evolution.map((e) => (
                         <Card
