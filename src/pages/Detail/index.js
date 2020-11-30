@@ -143,39 +143,36 @@ export default function Detail({ route, navigation }) {
 
                     setEvolution([evo1, evo2]);
                 }
+            } else if (item.n === e1) {
+                const res = await api.get(`pokemon/${e2}`);
+
+                let evo = {
+                    i: String(res.data.id),
+                    n: res.data.name,
+                    t: res.data.types,
+                    s: res.data.sprites.front_default,
+                    hp: res.data.stats[0].base_stat,
+                    atk: res.data.stats[1].base_stat,
+                    def: res.data.stats[2].base_stat,
+                    spd: res.data.stats[3].base_stat,
+                };
+
+                setEvolution([evo]);
             } else {
-                console.log('ENTROUUU AQUI');
-                if (item.n === e1) {
-                    const res = await api.get(`pokemon/${e2}`);
+                const res = await api.get(`pokemon/${e1}`);
 
-                    let evo = {
-                        i: String(res.data.id),
-                        n: res.data.name,
-                        t: res.data.types,
-                        s: res.data.sprites.front_default,
-                        hp: res.data.stats[0].base_stat,
-                        atk: res.data.stats[1].base_stat,
-                        def: res.data.stats[2].base_stat,
-                        spd: res.data.stats[3].base_stat,
-                    };
+                let evo = {
+                    i: String(res.data.id),
+                    n: res.data.name,
+                    t: res.data.types,
+                    s: res.data.sprites.front_default,
+                    hp: res.data.stats[0].base_stat,
+                    atk: res.data.stats[1].base_stat,
+                    def: res.data.stats[2].base_stat,
+                    spd: res.data.stats[3].base_stat,
+                };
 
-                    setEvolution([evo]);
-                } else {
-                    const res = await api.get(`pokemon/${e1}`);
-
-                    let evo = {
-                        i: String(res.data.id),
-                        n: res.data.name,
-                        t: res.data.types,
-                        s: res.data.sprites.front_default,
-                        hp: res.data.stats[0].base_stat,
-                        atk: res.data.stats[1].base_stat,
-                        def: res.data.stats[2].base_stat,
-                        spd: res.data.stats[3].base_stat,
-                    };
-
-                    setEvolution([evo]);
-                }
+                setEvolution([evo]);
             }
         }
     }
@@ -404,7 +401,6 @@ export default function Detail({ route, navigation }) {
 
             <BottomHeader>
                 <BottomTitle>Family tree</BottomTitle>
-                {console.log(evolution)}
                 <Chain>
                     {evolution.map((e) => (
                         <Card

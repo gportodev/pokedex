@@ -121,43 +121,42 @@ export default function Pokemons({ navigation }) {
     );
 
     const searchPoke = () => {
-        let convert = String(wantedPokemon).toLowerCase();
-
-        if (!convert) {
+        if (!wantedPokemon) {
             Alert.alert('Type the pokemon name!');
         } else {
+            let convert = String(wantedPokemon).toLowerCase();
+
             (async () => {
-                const response = await api.get(`pokemon/${convert}`);
+                try {
+                    const response = await api.get(`pokemon/${convert}`);
+                    let {
+                        id,
+                        name,
+                        height,
+                        weight,
+                        types,
+                        sprites,
+                        stats,
+                    } = response.data;
 
-                const chain = await api.get('evolution-chain');
+                    if (response.data) {
+                        let pok = {
+                            i: String(id),
+                            n: name,
+                            h: height,
+                            w: weight,
+                            t: types,
+                            s: sprites.front_default,
+                            hp: stats[0].base_stat,
+                            atk: stats[1].base_stat,
+                            def: stats[2].base_stat,
+                            spd: stats[3].base_stat,
+                        };
 
-                console.log(chain.data);
-
-                let {
-                    id,
-                    name,
-                    height,
-                    weight,
-                    types,
-                    sprites,
-                    stats,
-                } = response.data;
-
-                if (response.data) {
-                    let pok = {
-                        i: String(id),
-                        n: name,
-                        h: height,
-                        w: weight,
-                        t: types,
-                        s: sprites.front_default,
-                        hp: stats[0].base_stat,
-                        atk: stats[1].base_stat,
-                        def: stats[2].base_stat,
-                        spd: stats[3].base_stat,
-                    };
-
-                    navigation.navigate('Detail', { item: pok });
+                        navigation.navigate('Detail', { item: pok });
+                    }
+                } catch (error) {
+                    Alert.alert('Error! The pokemon does not exist!');
                 }
             })();
         }
