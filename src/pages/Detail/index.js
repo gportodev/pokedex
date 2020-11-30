@@ -663,8 +663,12 @@ export default function Detail({ route, navigation }) {
                 let evo = {
                     i: String(res.data.id),
                     n: res.data.name,
-                    t: res.data.types[0].type.name,
+                    t: res.data.types,
                     s: res.data.sprites.front_default,
+                    hp: res.data.stats[0].base_stat,
+                    atk: res.data.stats[1].base_stat,
+                    def: res.data.stats[2].base_stat,
+                    spd: res.data.stats[3].base_stat,
                 };
 
                 setEvolution([evo]);

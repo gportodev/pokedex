@@ -126,13 +126,40 @@ export default function Pokemons({ navigation }) {
         if (!convert) {
             Alert.alert('Type the pokemon name!');
         } else {
-            const look = poke.find((p) => p.n === convert);
+            (async () => {
+                const response = await api.get(`pokemon/${convert}`);
 
-            if (look) {
-                navigation.navigate('Detail', { item: look });
-            } else {
-                Alert.alert('Could not find the pokemon!');
-            }
+                const chain = await api.get('evolution-chain');
+
+                console.log(chain.data);
+
+                let {
+                    id,
+                    name,
+                    height,
+                    weight,
+                    types,
+                    sprites,
+                    stats,
+                } = response.data;
+
+                if (response.data) {
+                    let pok = {
+                        i: String(id),
+                        n: name,
+                        h: height,
+                        w: weight,
+                        t: types,
+                        s: sprites.front_default,
+                        hp: stats[0].base_stat,
+                        atk: stats[1].base_stat,
+                        def: stats[2].base_stat,
+                        spd: stats[3].base_stat,
+                    };
+
+                    navigation.navigate('Detail', { item: pok });
+                }
+            })();
         }
     };
 
