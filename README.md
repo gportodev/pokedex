@@ -27,7 +27,7 @@
 
 - Lista de pokémons: seguindo a paginação da própria API(20 pokémons).
 
-- Family tree: lógica criada apenas para essa lista especificamente.
+- Family tree: trás as evoluções dos pokémons
 
 - API: https://pokeapi.co/
  
