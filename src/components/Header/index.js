@@ -1,18 +1,17 @@
 import React from 'react';
 
-import { Container, Grid, Logo, Title } from './styles';
+import { Grid, Logo, Title } from './styles';
 
-import logo from '../../assets/logo.png'
+import img_one from '../../assets/head.png';
 
-export default function Header () {
-  return (
-    <Container>
-      <Grid>
-          <Logo source={logo}/>
+export default function Header() {
+    return (
+        <>
+            <Logo source={img_one} />
 
-          <Title>POKEMON CHALLENGE</Title>
-      </Grid>
-    </Container>
-  );
-};
-
+            <Grid>
+                <Title>Pokedex</Title>
+            </Grid>
+        </>
+    );
+}
