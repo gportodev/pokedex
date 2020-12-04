@@ -19,7 +19,7 @@
 
 ## Features
 
-### Adicionar naver
+### Buscar pokemon
 
 - Buscar pokemon: insira o nome do pokémon para ver seu perfil.
 
