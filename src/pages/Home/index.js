@@ -4,6 +4,7 @@ import { Container } from '../../components/Back/styles';
 
 import Header from '../../components/Header';
 import Pokemons from '../../components/Pokemons';
+import Bottom from '../../components/Bottom';
 
 export default function Home({ navigation }) {
     return (
@@ -11,6 +12,8 @@ export default function Home({ navigation }) {
             <Header />
 
             <Pokemons navigation={navigation} />
+
+            <Bottom />
         </Container>
     );
 }

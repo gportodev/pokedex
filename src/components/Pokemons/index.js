@@ -6,9 +6,9 @@ import React, { useEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 
 import { Alert } from 'react-native';
-import { List, Search, IconComponent, InComponent } from './styles';
+import { List, Search, Square, IconComponent, InComponent } from './styles';
 
-import { Card, Avatar, Tag, Line, Data, Info } from '../Card/styles';
+import { Card, Avatar, Line, Data } from '../Card/styles';
 
 import api from '../../services/api';
 import colors from '../../style/colors';
@@ -52,71 +52,61 @@ export default function Pokemons({ navigation }) {
 
     const renderItem = ({ item }) => (
         <Card onPress={() => navigation.navigate('Detail', { item })}>
-            <Tag>
-                <Info
-                    style={{
-                        fontSize: 15,
-                        color: colors.num,
-                    }}
-                >
-                    # {item.i}
-                </Info>
-
-                <Avatar source={{ uri: item.s }} />
-            </Tag>
-
-            <Line>
-                <Info
-                    style={{
-                        fontSize: 16,
-                        fontFamily: 'RobotoSlab_400Regular',
-                    }}
-                >
-                    Name:
-                </Info>
-
+            <Line style={{ alignItems: 'center' }}>
                 <Data
                     style={{
-                        fontSize: 16,
+                        top: 20,
+                        fontSize: 24,
                         fontFamily: 'RobotoSlab_600SemiBold',
-                        left: 5,
+                        color: colors.fcolor_one,
                     }}
                 >
                     {item.n}
                 </Data>
             </Line>
 
-            <Line>
-                <Info
-                    style={{
-                        fontSize: 14,
-                        fontFamily: 'RobotoSlab_400Regular',
-                    }}
-                >
-                    Types:
-                </Info>
-                {item.t.length > 1 ? (
+            {item.t.length > 1 ? (
+                <Line style={{ left: 15 }}>
                     <Data
                         style={{
-                            fontSize: 14,
+                            top: 50,
+                            justifyContent: 'flex-start',
+                            fontSize: 18,
                             fontFamily: 'RobotoSlab_600SemiBold',
-                            left: 5,
-                        }}
-                    >
-                        {item.t[0].type.name},{item.t[1].type.name}
-                    </Data>
-                ) : (
-                    <Data
-                        style={{
-                            fontSize: 14,
-                            fontFamily: 'RobotoSlab_600SemiBold',
-                            left: 5,
+                            color: colors.fcolor_one,
                         }}
                     >
                         {item.t[0].type.name}
                     </Data>
-                )}
-            </Line>
+
+                    <Data
+                        style={{
+                            top: 50,
+                            justifyContent: 'flex-start',
+                            fontSize: 18,
+                            fontFamily: 'RobotoSlab_600SemiBold',
+                            color: colors.fcolor_one,
+                        }}
+                    >
+                        {item.t[1].type.name}
+                    </Data>
+                </Line>
+            ) : (
+                <Line style={{ left: 15 }}>
+                    <Data
+                        style={{
+                            top: 50,
+                            justifyContent: 'flex-start',
+                            fontSize: 18,
+                            fontFamily: 'RobotoSlab_600SemiBold',
+                            color: colors.fcolor_one,
+                        }}
+                    >
+                        {item.t[0].type.name}
+                    </Data>
+                </Line>
+            )}
+            <Avatar source={{ uri: item.s }} style={{ top: 100 }} />
         </Card>
     );
 
@@ -169,22 +159,24 @@ export default function Pokemons({ navigation }) {
     return (
         <>
             <Search>
-                <IconComponent onPress={searchPoke}>
-                    <Feather name="search" size={20} color={colors.num} />
-                </IconComponent>
                 <InComponent
-                    placeholder="Type the pokémon name"
-                    placeholderTextColor={colors.num}
-                    style={{
-                        fontFamily: 'RobotoSlab_400Regular',
-                        color: 'white',
-                    }}
+                    placeholder="Search"
+                    placeholderTextColor={colors.fcolor_two}
                     autoCorrect={false}
                     autoCapitalize="none"
                     onChangeText={(text) => setWantedpokemon(text)}
                     value={wantedPokemon}
                     onSubmitEditing={searchPoke}
                 />
+                <Square>
+                    <IconComponent onPress={searchPoke}>
+                        <Feather
+                            name="search"
+                            size={24}
+                            color={colors.background_one}
+                        />
+                    </IconComponent>
+                </Square>
             </Search>
 
             <List
@@ -192,10 +184,7 @@ export default function Pokemons({ navigation }) {
                 renderItem={renderItem}
                 keyExtractor={(item) => item.i}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                    alignItems: 'center',
-                }}
-                numColumns={2}
+                horizontal={true}
             />
         </>
     );

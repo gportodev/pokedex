@@ -4,5 +4,5 @@ import colors from '../../style/colors';
 
 export const Container = styled.View`
     flex: 1;
-    background: ${colors.background};
+    background: ${colors.background_one};
 `;
