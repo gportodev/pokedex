@@ -5,46 +5,52 @@ import colors from '../../style/colors';
 
 const { height, width } = Dimensions.get('window');
 
-export const Container = styled.View``;
+export const Container = styled.View`
+    flex-direction: column;
+`;
 
 export const Grid = styled.View`
     align-items: flex-end;
-    bottom: 15%;
+    padding-right: ${`${width * 0.03}px`};
+    bottom: ${`${height * 0.05}px`};
 `;
 
 export const Title = styled.Text`
-    right: 5%;
-    font-size: ${`${width * 0.1}px`};
+    font-size: ${`${width * 0.08}px`};
     color: ${colors.fcolor_one};
+    font-family: 'RobotoSlab_600SemiBold';
 `;
 
 export const Search = styled.View`
+    width: ${`${width * 0.9}px`};
+    height: ${`${height * 0.08}px`};
+    left: ${`${width * 0.04}px`};
     flex-direction: row;
     align-items: center;
-    align-self: center;
-    width: ${`${width * 0.8}px`};
-    height: ${`${height * 0.075}px`};
-    background: ${colors.background_two};
     border-radius: 6px;
-    bottom: 10%;
-`;
-
-export const IconComponent = styled.TouchableOpacity`
-    width: ${`${width * 0.11}px`};
-    height: ${`${width * 0.11}px`};
-    align-items: center;
-    justify-content: center;
-    right: ${`${width * 0.22}px`};
-    background-color: ${colors.background_six};
-    border-radius: 10px;
+    background: ${colors.background_two};
+    margin-bottom: ${`${height * 0.01}px`};
+    bottom: ${`${height * 0.025}px`};
 `;
 
 export const InComponent = styled.TextInput`
     width: ${`${width * 0.9}px`};
+    height: ${`${height * 0.08}px`};
+    height: 40px;
     font-size: ${`${width * 0.04}px`};
-    left: 20%;
+    padding-left: ${`${width * 0.04}px`};
     font-family: 'RobotoSlab_700Bold';
     color: ${colors.fcolor_two};
+`;
+
+export const IconComponent = styled.TouchableOpacity`
+    background: ${colors.background_six};
+    width: ${`${width * 0.13}px`};
+    height: ${`${height * 0.07}px`};
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    right: ${`${width * 0.15}px`};
 `;
 
 export const List = styled.FlatList``;

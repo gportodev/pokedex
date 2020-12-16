@@ -7,7 +7,7 @@ import colors from '../../style/colors';
 
 import Bottom from '../../components/Bottom';
 import PokemonPoint from '../../components/PokemonPoint';
-import { Line, Data } from '../../components/Card/styles';
+import { Card, Line, Data } from '../../components/Card/styles';
 
 import {
     VLogo,
@@ -34,8 +34,6 @@ export default function Detail({ route, navigation }) {
     const [evolution, setEvolution] = useState([]);
 
     const { height, width } = Dimensions.get('window');
-
-    console.ignoredYellowBox = ['Warning:'];
 
     async function loadEvolution() {
         const poke_specie = await api.get(`pokemon-species/${item.n}`);
@@ -250,7 +248,7 @@ export default function Detail({ route, navigation }) {
                         >
                             <Data
                                 style={{
-                                    fontSize: width * 0.1,
+                                    fontSize: width * 0.09,
                                     fontFamily: 'RobotoSlab_600SemiBold',
                                     color: colors.fcolor_one,
                                 }}
@@ -283,7 +281,8 @@ export default function Detail({ route, navigation }) {
                                 fontFamily: 'RobotoSlab_700Bold',
                                 fontSize: width * 0.05,
                                 top: '2%',
-                                margin: '2%',
+                                left: '2%',
+                                margin: '1%',
                             }}
                         >
                             Stats
@@ -293,15 +292,16 @@ export default function Detail({ route, navigation }) {
                             style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
-                                margin: '1.5%',
+                                margin: '1%',
+                                left: '5%',
                             }}
                         >
                             <Data
                                 style={{
                                     fontFamily: 'RobotoSlab_600SemiBold',
-                                    fontSize: width * 0.05,
-
+                                    fontSize: width * 0.04,
                                     textTransform: 'uppercase',
+                                    right: '15%',
                                 }}
                             >
                                 HP
@@ -313,15 +313,15 @@ export default function Detail({ route, navigation }) {
                         <Line
                             style={{
                                 flexDirection: 'row',
-                                margin: '1.5%',
+                                margin: '1%',
                             }}
                         >
                             <Data
                                 style={{
                                     fontFamily: 'RobotoSlab_600SemiBold',
-                                    fontSize: width * 0.05,
-
+                                    fontSize: width * 0.04,
                                     textTransform: 'uppercase',
+                                    left: '15%',
                                 }}
                             >
                                 ATK
@@ -332,13 +332,14 @@ export default function Detail({ route, navigation }) {
                         <Line
                             style={{
                                 flexDirection: 'row',
-                                margin: '1.5%',
+                                margin: '1%',
+                                left: '1%',
                             }}
                         >
                             <Data
                                 style={{
                                     fontFamily: 'RobotoSlab_600SemiBold',
-                                    fontSize: width * 0.05,
+                                    fontSize: width * 0.04,
                                     textTransform: 'uppercase',
                                 }}
                             >
@@ -350,14 +351,14 @@ export default function Detail({ route, navigation }) {
                         <Line
                             style={{
                                 flexDirection: 'row',
-                                margin: '1.5%',
+                                left: '1%',
+                                margin: '1%',
                             }}
                         >
                             <Data
                                 style={{
                                     fontFamily: 'RobotoSlab_600SemiBold',
                                     fontSize: width * 0.04,
-
                                     textTransform: 'uppercase',
                                 }}
                             >
@@ -377,6 +378,86 @@ export default function Detail({ route, navigation }) {
                             Family Tree
                         </Data>
                     </FamilyTree>
+                    <Line
+                        style={{
+                            flexDirection: 'row',
+                            top: height * 0.1,
+                        }}
+                    >
+                        {evolution.map((e) => (
+                            <Card
+                                key={e.i}
+                                onPress={() =>
+                                    navigation.replace('Detail', { item: e })
+                                }
+                            >
+                                <Line
+                                    style={{
+                                        alignItems: 'center',
+                                        bottom: height * 0.15,
+                                    }}
+                                >
+                                    <Data
+                                        style={{
+                                            top: height * 0.03,
+                                            fontSize: width * 0.05,
+                                            color: colors.fcolor_one,
+                                        }}
+                                    >
+                                        {e.n}
+                                    </Data>
+                                </Line>
+
+                                {e.t.length > 1 ? (
+                                    <Line
+                                        style={{
+                                            paddingLeft: width * 0.03,
+                                            bottom: height * 0.05,
+                                        }}
+                                    >
+                                        <Data
+                                            style={{
+                                                justifyContent: 'flex-start',
+                                                fontSize: width * 0.042,
+                                                color: colors.fcolor_one,
+                                            }}
+                                        >
+                                            {e.t[0].type.name}
+                                        </Data>
+
+                                        <Data
+                                            style={{
+                                                justifyContent: 'flex-start',
+                                                fontSize: width * 0.042,
+                                                color: colors.fcolor_one,
+                                            }}
+                                        >
+                                            {e.t[1].type.name}
+                                        </Data>
+                                    </Line>
+                                ) : (
+                                    <Line
+                                        style={{
+                                            paddingLeft: width * 0.03,
+                                            paddingTop: height * 0.03,
+                                            bottom: height * 0.08,
+                                        }}
+                                    >
+                                        <Data
+                                            style={{
+                                                justifyContent: 'flex-start',
+                                                fontSize: width * 0.042,
+                                                color: colors.fcolor_one,
+                                            }}
+                                        >
+                                            {e.t[0].type.name}
+                                        </Data>
+                                    </Line>
+                                )}
+                                <Avatar source={{ uri: e.s }} />
+                            </Card>
+                        ))}
+                    </Line>
                 </PokeStats>
             </Line>
 

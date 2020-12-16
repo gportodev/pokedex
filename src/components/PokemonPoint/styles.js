@@ -21,5 +21,5 @@ export const PointInactive = styled.View`
     width: 20px;
     height: 20px;
     border-radius: 4px;
-    margin: 1%;
+    margin: 0.6%;
 `;

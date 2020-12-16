@@ -33,18 +33,14 @@ export const PokeInfo = styled.View`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background-color: gray;
 `;
 
 export const Info = styled.View`
     flex-direction: column;
     right: ${`${width * 0.05}px`};
-    background-color: purple;
 `;
 
-export const AView = styled.View`
-    background-color: blue;
-`;
+export const AView = styled.View``;
 
 export const Avatar = styled.Image`
     height: ${`${height * 0.2}px`};
@@ -56,7 +52,7 @@ export const Tag = styled.View`
 
 export const PokeStats = styled.View`
     width: ${`${width}px`};
-    height: ${`${height * 0.6}px`};
+    height: ${`${height * 1}px`};
     background-color: ${colors.background_one};
     align-items: center;
 `;
