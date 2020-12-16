@@ -1,32 +1,30 @@
-/* eslint-disable prefer-const */
 import React, { useState, useEffect } from 'react';
 
-import { Feather } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
-import ProgressBar from 'react-native-progress/Bar';
-
+import { Dimensions } from 'react-native';
 import colors from '../../style/colors';
 
-import { Container } from '../../components/Back/styles';
-import {
-    Card,
-    Avatar,
-    Line,
-    Info,
-    Data,
-    Tag,
-} from '../../components/Card/styles';
+import Bottom from '../../components/Bottom';
+import PokemonPoint from '../../components/PokemonPoint';
+import { Line, Data } from '../../components/Card/styles';
 
 import {
-    PokeInfo,
+    VLogo,
+    Logo,
     GoBack,
-    Form,
-    BottomHeader,
-    BottomTitle,
-    Chain,
+    PokeInfo,
+    AView,
+    PokeStats,
+    Info,
+    Tag,
+    Avatar,
+    Container,
+    PokeData,
+    FamilyTree,
 } from './styles';
 
-import Header from '../../components/Header';
+import img from '../../assets/head.png';
 
 import api from '../../services/api';
 
@@ -35,10 +33,14 @@ export default function Detail({ route, navigation }) {
 
     const [evolution, setEvolution] = useState([]);
 
+    const { height, width } = Dimensions.get('window');
+
+    console.ignoredYellowBox = ['Warning:'];
+
     async function loadEvolution() {
         const poke_specie = await api.get(`pokemon-species/${item.n}`);
 
-        let poke_chain = poke_specie.data.evolution_chain;
+        const poke_chain = poke_specie.data.evolution_chain;
 
         const tree = await api.get(`${poke_chain.url}`);
 
@@ -46,20 +48,20 @@ export default function Detail({ route, navigation }) {
 
         const { species, evolves_to } = chain;
 
-        let e1 = species.name;
+        const e1 = species.name;
 
         if (evolves_to.length > 0) {
-            let e2 = evolves_to[0].species.name;
+            const e2 = evolves_to[0].species.name;
 
             if (evolves_to[0].evolves_to.length > 0) {
-                let e3 = chain.evolves_to[0].evolves_to[0].species.name;
+                const e3 = chain.evolves_to[0].evolves_to[0].species.name;
 
                 if (item.n === e1) {
                     const res1 = await api.get(`pokemon/${e2}`);
 
                     const res2 = await api.get(`pokemon/${e3}`);
 
-                    let evo1 = {
+                    const evo1 = {
                         i: String(res1.data.id),
                         n: res1.data.name,
                         t: res1.data.types,
@@ -70,7 +72,7 @@ export default function Detail({ route, navigation }) {
                         spd: res1.data.stats[3].base_stat,
                     };
 
-                    let evo2 = {
+                    const evo2 = {
                         i: String(res2.data.id),
                         n: res2.data.name,
                         t: res2.data.types,
@@ -89,7 +91,7 @@ export default function Detail({ route, navigation }) {
 
                     const res2 = await api.get(`pokemon/${e3}`);
 
-                    let evo1 = {
+                    const evo1 = {
                         i: String(res1.data.id),
                         n: res1.data.name,
                         t: res1.data.types,
@@ -100,7 +102,7 @@ export default function Detail({ route, navigation }) {
                         spd: res1.data.stats[3].base_stat,
                     };
 
-                    let evo2 = {
+                    const evo2 = {
                         i: String(res2.data.id),
                         n: res2.data.name,
                         t: res2.data.types,
@@ -119,7 +121,7 @@ export default function Detail({ route, navigation }) {
 
                     const res2 = await api.get(`pokemon/${e2}`);
 
-                    let evo1 = {
+                    const evo1 = {
                         i: String(res1.data.id),
                         n: res1.data.name,
                         t: res1.data.types,
@@ -130,7 +132,7 @@ export default function Detail({ route, navigation }) {
                         spd: res1.data.stats[3].base_stat,
                     };
 
-                    let evo2 = {
+                    const evo2 = {
                         i: String(res2.data.id),
                         n: res2.data.name,
                         t: res2.data.types,
@@ -146,7 +148,7 @@ export default function Detail({ route, navigation }) {
             } else if (item.n === e1) {
                 const res = await api.get(`pokemon/${e2}`);
 
-                let evo = {
+                const evo = {
                     i: String(res.data.id),
                     n: res.data.name,
                     t: res.data.types,
@@ -161,7 +163,7 @@ export default function Detail({ route, navigation }) {
             } else {
                 const res = await api.get(`pokemon/${e1}`);
 
-                let evo = {
+                const evo = {
                     i: String(res.data.id),
                     n: res.data.name,
                     t: res.data.types,
@@ -183,292 +185,202 @@ export default function Detail({ route, navigation }) {
 
     return (
         <Container>
-            <Header />
+            <VLogo>
+                <Logo source={img} />
+                <GoBack onPress={() => navigation.goBack()}>
+                    <AntDesign
+                        name="left"
+                        size={24}
+                        color={colors.fcolor_one}
+                    />
+                </GoBack>
+            </VLogo>
 
-            <GoBack onPress={() => navigation.goBack()}>
-                <Feather name="arrow-left" size={24} color={colors.value} />
-
-                <Data
-                    style={{
-                        left: 5,
-                        fontFamily: 'RobotoSlab_400Regular',
-                        fontSize: 22,
-                    }}
-                >
-                    Back
-                </Data>
-            </GoBack>
-
-            <Card
+            <Line
                 style={{
-                    height: '50%',
-                    width: '80%',
-                    alignSelf: 'center',
-                    top: 4,
+                    flexDirection: 'column',
+                    bottom: height * 0.1,
                 }}
             >
-                <Tag style={{ alignSelf: 'flex-start' }}>
-                    <Info
+                <PokeInfo>
+                    <Line
                         style={{
-                            fontSize: 30,
-                            color: colors.num,
+                            left: width * 0.05,
                         }}
                     >
-                        # {item.i}
-                    </Info>
-                </Tag>
-                <PokeInfo style={{ bottom: 50 }}>
-                    <Avatar
-                        source={{ uri: item.s }}
-                        style={{
-                            width: 100,
-                            height: 100,
-                        }}
-                    />
-
-                    <Data
-                        style={{
-                            fontSize: 24,
-                            fontFamily: 'RobotoSlab_600SemiBold',
-                        }}
-                    >
-                        {item.n}
-                    </Data>
-
-                    <Form>
-                        <Line style={{ flexDirection: 'column' }}>
-                            <Data
-                                style={{
-                                    color: colors.key,
-                                    fontSize: 20,
-                                    fontFamily: 'RobotoSlab_400Regular',
-                                }}
-                            >
-                                {' '}
-                                {item.w} KG
-                            </Data>
-
-                            <Data
-                                style={{
-                                    color: colors.num,
-                                    fontSize: 16,
-                                    fontFamily: 'RobotoSlab_400Regular',
-                                }}
-                            >
-                                {' '}
-                                Weight
-                            </Data>
-                        </Line>
-
-                        <Line style={{ flexDirection: 'column' }}>
-                            <Data
-                                style={{
-                                    color: colors.key,
-                                    fontSize: 20,
-                                    fontFamily: 'RobotoSlab_400Regular',
-                                }}
-                            >
-                                {' '}
-                                {item.h} M
-                            </Data>
-
-                            <Data
-                                style={{
-                                    color: colors.num,
-                                    fontSize: 14,
-                                    fontFamily: 'RobotoSlab_400Regular',
-                                }}
-                            >
-                                {' '}
-                                Height
-                            </Data>
-                        </Line>
-                    </Form>
-
-                    <Data style={{ color: colors.key, fontSize: 16 }}>
-                        Stats
-                    </Data>
-
-                    <Line>
-                        <Info
-                            style={{
-                                fontFamily: 'RobotoSlab_400Regular',
-                                fontSize: 12,
-                                textTransform: 'uppercase',
-                            }}
-                        >
-                            HP
-                        </Info>
-
-                        <ProgressBar
-                            width={200}
-                            height={22}
-                            borderRadius={20}
-                            style={{
-                                left: 10,
-                            }}
-                            progress={item.hp / 100}
-                            color={colors.value}
-                            unfilledColor={colors.probar}
-                        />
-                        <Data style={{ color: colors.key, right: 100 }}>
-                            {item.hp}/100
-                        </Data>
-                    </Line>
-
-                    <Line>
-                        <Info
-                            style={{
-                                fontFamily: 'RobotoSlab_400Regular',
-                                fontSize: 12,
-                                textTransform: 'uppercase',
-                            }}
-                        >
-                            ATK
-                        </Info>
-
-                        <ProgressBar
-                            width={200}
-                            height={22}
-                            borderRadius={20}
-                            style={{
-                                left: 10,
-                            }}
-                            progress={item.atk / 100}
-                            color={colors.value}
-                            unfilledColor={colors.probar}
-                        />
-                        <Data style={{ color: colors.key, right: 100 }}>
-                            {item.atk}/100
-                        </Data>
-                    </Line>
-
-                    <Line>
-                        <Info
-                            style={{
-                                fontFamily: 'RobotoSlab_400Regular',
-                                fontSize: 12,
-                                textTransform: 'uppercase',
-                            }}
-                        >
-                            DEF
-                        </Info>
-
-                        <ProgressBar
-                            width={200}
-                            height={22}
-                            borderRadius={20}
-                            style={{
-                                left: 10,
-                            }}
-                            progress={item.def / 100}
-                            color={colors.value}
-                            unfilledColor={colors.probar}
-                        />
-                        <Data style={{ color: colors.key, right: 100 }}>
-                            {item.def}/100
-                        </Data>
-                    </Line>
-
-                    <Line>
-                        <Info
-                            style={{
-                                fontFamily: 'RobotoSlab_400Regular',
-                                fontSize: 12,
-                                textTransform: 'uppercase',
-                            }}
-                        >
-                            SPD
-                        </Info>
-
-                        <ProgressBar
-                            width={200}
-                            height={22}
-                            borderRadius={20}
-                            style={{
-                                left: 10,
-                            }}
-                            progress={item.spd / 100}
-                            color={colors.value}
-                            unfilledColor={colors.probar}
-                        />
-                        <Data style={{ color: colors.key, right: 100 }}>
-                            {item.spd}/100
-                        </Data>
-                    </Line>
-                </PokeInfo>
-            </Card>
-
-            <BottomHeader>
-                <BottomTitle>Family tree</BottomTitle>
-                <Chain>
-                    {evolution.map((e) => (
-                        <Card
-                            key={e.i}
-                            onPress={() =>
-                                navigation.replace('Detail', { item: e })
-                            }
-                        >
-                            <Avatar source={{ uri: e.s }} />
-
-                            <Line>
-                                <Info
+                        {item.t.length === 2 ? (
+                            <>
+                                <Data
                                     style={{
-                                        fontSize: 14,
-                                        fontFamily: 'RobotoSlab_400Regular',
+                                        fontSize: width * 0.06,
+                                        fontFamily: 'RobotoSlab_600SemiBold',
+                                        color: colors.fcolor_one,
                                     }}
                                 >
-                                    Name:
-                                </Info>
+                                    {item.t[0].type.name}
+                                </Data>
 
                                 <Data
                                     style={{
-                                        fontSize: 14,
+                                        fontSize: width * 0.06,
                                         fontFamily: 'RobotoSlab_600SemiBold',
-                                        left: 5,
+                                        color: colors.fcolor_one,
                                     }}
                                 >
-                                    {e.n}
+                                    {item.t[1].type.name}
                                 </Data>
-                            </Line>
+                            </>
+                        ) : (
+                            <Data
+                                style={{
+                                    fontSize: width * 0.06,
+                                    fontFamily: 'RobotoSlab_600SemiBold',
+                                    color: colors.fcolor_one,
+                                }}
+                            >
+                                {item.t[0].type.name}
+                            </Data>
+                        )}
+                    </Line>
+                    <Info>
+                        <Line
+                            style={{
+                                marginBottom: height * 0.1,
+                            }}
+                        >
+                            <Data
+                                style={{
+                                    fontSize: width * 0.1,
+                                    fontFamily: 'RobotoSlab_600SemiBold',
+                                    color: colors.fcolor_one,
+                                }}
+                            >
+                                {item.n}
+                            </Data>
 
-                            <Line>
-                                <Info
+                            <Tag>
+                                <Data
                                     style={{
-                                        fontSize: 12,
-                                        fontFamily: 'RobotoSlab_400Regular',
+                                        fontSize: width * 0.04,
+                                        color: colors.fcolor_one,
                                     }}
                                 >
-                                    Types:
-                                </Info>
-                                {e.t.length === 2 ? (
-                                    <Data
-                                        style={{
-                                            fontSize: 14,
-                                            fontFamily:
-                                                'RobotoSlab_600SemiBold',
-                                            left: 5,
-                                        }}
-                                    >
-                                        {e.t[0].type.name},{e.t[1].type.name}
-                                    </Data>
-                                ) : (
-                                    <Data
-                                        style={{
-                                            fontSize: 14,
-                                            fontFamily:
-                                                'RobotoSlab_600SemiBold',
-                                            left: 5,
-                                        }}
-                                    >
-                                        {e.t[0].type.name}
-                                    </Data>
-                                )}
-                            </Line>
-                        </Card>
-                    ))}
-                </Chain>
-            </BottomHeader>
+                                    #{item.i}
+                                </Data>
+                            </Tag>
+                        </Line>
+
+                        <AView>
+                            <Avatar source={{ uri: item.s }} />
+                        </AView>
+                    </Info>
+                </PokeInfo>
+
+                <PokeStats>
+                    <PokeData>
+                        <Data
+                            style={{
+                                fontFamily: 'RobotoSlab_700Bold',
+                                fontSize: width * 0.05,
+                                top: '2%',
+                                margin: '2%',
+                            }}
+                        >
+                            Stats
+                        </Data>
+
+                        <Line
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                margin: '1.5%',
+                            }}
+                        >
+                            <Data
+                                style={{
+                                    fontFamily: 'RobotoSlab_600SemiBold',
+                                    fontSize: width * 0.05,
+
+                                    textTransform: 'uppercase',
+                                }}
+                            >
+                                HP
+                            </Data>
+
+                            <PokemonPoint number={item.hp} />
+                        </Line>
+
+                        <Line
+                            style={{
+                                flexDirection: 'row',
+                                margin: '1.5%',
+                            }}
+                        >
+                            <Data
+                                style={{
+                                    fontFamily: 'RobotoSlab_600SemiBold',
+                                    fontSize: width * 0.05,
+
+                                    textTransform: 'uppercase',
+                                }}
+                            >
+                                ATK
+                            </Data>
+                            <PokemonPoint number={item.atk} />
+                        </Line>
+
+                        <Line
+                            style={{
+                                flexDirection: 'row',
+                                margin: '1.5%',
+                            }}
+                        >
+                            <Data
+                                style={{
+                                    fontFamily: 'RobotoSlab_600SemiBold',
+                                    fontSize: width * 0.05,
+                                    textTransform: 'uppercase',
+                                }}
+                            >
+                                DEF
+                            </Data>
+                            <PokemonPoint number={item.def} />
+                        </Line>
+
+                        <Line
+                            style={{
+                                flexDirection: 'row',
+                                margin: '1.5%',
+                            }}
+                        >
+                            <Data
+                                style={{
+                                    fontFamily: 'RobotoSlab_600SemiBold',
+                                    fontSize: width * 0.04,
+
+                                    textTransform: 'uppercase',
+                                }}
+                            >
+                                SPD
+                            </Data>
+
+                            <PokemonPoint number={item.spd} />
+                        </Line>
+                    </PokeData>
+                    <FamilyTree>
+                        <Data
+                            style={{
+                                fontSize: 18,
+                                fontFamily: 'RobotoSlab_700Bold',
+                            }}
+                        >
+                            Family Tree
+                        </Data>
+                    </FamilyTree>
+                </PokeStats>
+            </Line>
+
+            <Bottom />
         </Container>
     );
 }

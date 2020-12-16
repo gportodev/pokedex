@@ -1,17 +1,13 @@
 import React from 'react';
 
-import { Grid, Logo, Title } from './styles';
+import { VLogo, Logo } from './styles';
 
-import img_one from '../../assets/head.png';
+import img from '../../assets/head.png';
 
 export default function Header() {
     return (
-        <>
-            <Logo source={img_one} />
-
-            <Grid>
-                <Title>Pokedex</Title>
-            </Grid>
-        </>
+        <VLogo>
+            <Logo source={img} />
+        </VLogo>
     );
 }

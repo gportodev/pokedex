@@ -1,12 +1,18 @@
-/* eslint-disable react/jsx-boolean-value */
-/* eslint-disable prefer-template */
-/* eslint-disable prefer-const */
 import React, { useEffect, useState } from 'react';
+
+import { Alert, Keyboard, Dimensions } from 'react-native';
 
 import { Feather } from '@expo/vector-icons';
 
-import { Alert } from 'react-native';
-import { List, Search, Square, IconComponent, InComponent } from './styles';
+import {
+    Container,
+    Grid,
+    Title,
+    List,
+    Search,
+    InComponent,
+    IconComponent,
+} from './styles';
 
 import { Card, Avatar, Line, Data } from '../Card/styles';
 
@@ -17,6 +23,8 @@ export default function Pokemons({ navigation }) {
     const [poke, setPoke] = useState([]);
     const [wantedPokemon, setWantedpokemon] = useState();
 
+    const { height, width } = Dimensions.get('window');
+
     async function loadData() {
         const response = await api.get('pokemon');
 
@@ -25,10 +33,18 @@ export default function Pokemons({ navigation }) {
         results.forEach(async (r) => {
             const res = await api.get(`pokemon/${r.name}`);
 
-            let { id, name, height, weight, types, sprites, stats } = res.data;
+            const {
+                id,
+                name,
+                height,
+                weight,
+                types,
+                sprites,
+                stats,
+            } = res.data;
 
             if (res.data) {
-                let pok = {
+                const pok = {
                     i: String(id),
                     n: name,
                     h: height,
@@ -47,17 +63,18 @@ export default function Pokemons({ navigation }) {
     }
 
     useEffect(() => {
-        loadData();
+        if (poke.length === 0) {
+            loadData();
+        }
     }, []);
 
     const renderItem = ({ item }) => (
         <Card onPress={() => navigation.navigate('Detail', { item })}>
-            <Line style={{ alignItems: 'center' }}>
+            <Line style={{ alignItems: 'center', bottom: height * 0.15 }}>
                 <Data
                     style={{
-                        top: 20,
-                        fontSize: 24,
-                        fontFamily: 'RobotoSlab_600SemiBold',
+                        top: height * 0.03,
+                        fontSize: width * 0.05,
                         color: colors.fcolor_one,
                     }}
                 >
@@ -66,13 +83,16 @@ export default function Pokemons({ navigation }) {
             </Line>
 
             {item.t.length > 1 ? (
-                <Line style={{ left: 15 }}>
+                <Line
+                    style={{
+                        paddingLeft: width * 0.03,
+                        bottom: height * 0.05,
+                    }}
+                >
                     <Data
                         style={{
-                            top: 50,
                             justifyContent: 'flex-start',
-                            fontSize: 18,
-                            fontFamily: 'RobotoSlab_600SemiBold',
+                            fontSize: width * 0.042,
                             color: colors.fcolor_one,
                         }}
                     >
@@ -81,10 +101,8 @@ export default function Pokemons({ navigation }) {
 
                     <Data
                         style={{
-                            top: 50,
                             justifyContent: 'flex-start',
-                            fontSize: 18,
-                            fontFamily: 'RobotoSlab_600SemiBold',
+                            fontSize: width * 0.042,
                             color: colors.fcolor_one,
                         }}
                     >
@@ -92,13 +110,17 @@ export default function Pokemons({ navigation }) {
                     </Data>
                 </Line>
             ) : (
-                <Line style={{ left: 15 }}>
+                <Line
+                    style={{
+                        paddingLeft: width * 0.03,
+                        paddingTop: height * 0.03,
+                        bottom: height * 0.08,
+                    }}
+                >
                     <Data
                         style={{
-                            top: 50,
                             justifyContent: 'flex-start',
-                            fontSize: 18,
-                            fontFamily: 'RobotoSlab_600SemiBold',
+                            fontSize: width * 0.042,
                             color: colors.fcolor_one,
                         }}
                     >
@@ -106,7 +128,7 @@ export default function Pokemons({ navigation }) {
                     </Data>
                 </Line>
             )}
-            <Avatar source={{ uri: item.s }} style={{ top: 100 }} />
+            <Avatar source={{ uri: item.s }} />
         </Card>
     );
 
@@ -114,12 +136,12 @@ export default function Pokemons({ navigation }) {
         if (!wantedPokemon) {
             Alert.alert('Type the pokemon name!');
         } else {
-            let convert = String(wantedPokemon).toLowerCase();
+            const convert = String(wantedPokemon).toLowerCase();
 
             (async () => {
                 try {
                     const response = await api.get(`pokemon/${convert}`);
-                    let {
+                    const {
                         id,
                         name,
                         height,
@@ -130,7 +152,7 @@ export default function Pokemons({ navigation }) {
                     } = response.data;
 
                     if (response.data) {
-                        let pok = {
+                        const pok = {
                             i: String(id),
                             n: name,
                             h: height,
@@ -147,6 +169,8 @@ export default function Pokemons({ navigation }) {
                     }
                 } catch (error) {
                     Alert.alert('Error! The pokemon does not exist!');
+                    Keyboard.dismiss();
+                    setWantedpokemon('');
                 }
             })();
         }
@@ -157,7 +181,10 @@ export default function Pokemons({ navigation }) {
     }
 
     return (
-        <>
+        <Container>
+            <Grid>
+                <Title>Pokedex</Title>
+            </Grid>
             <Search>
                 <InComponent
                     placeholder="Search"
@@ -168,24 +195,22 @@ export default function Pokemons({ navigation }) {
                     value={wantedPokemon}
                     onSubmitEditing={searchPoke}
                 />
-                <Square>
-                    <IconComponent onPress={searchPoke}>
-                        <Feather
-                            name="search"
-                            size={24}
-                            color={colors.background_one}
-                        />
-                    </IconComponent>
-                </Square>
+                <IconComponent onPress={searchPoke}>
+                    <Feather
+                        name="search"
+                        size={height * 0.027}
+                        color={colors.background_one}
+                    />
+                </IconComponent>
             </Search>
 
             <List
                 data={poke}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.i}
-                showsVerticalScrollIndicator={false}
-                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                horizontal
             />
-        </>
+        </Container>
     );
 }

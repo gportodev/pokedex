@@ -1,18 +1,12 @@
 import styled from 'styled-components/native';
 
-import colors from '../../style/colors';
+import { Dimensions } from 'react-native';
 
-export const Grid = styled.View`
-    left: 55%;
-    bottom: 6%;
-`;
+const { height } = Dimensions.get('window');
+
+export const VLogo = styled.View``;
 
 export const Logo = styled.Image`
     width: 100%;
-`;
-
-export const Title = styled.Text`
-    font-size: 36px;
-    color: ${colors.fcolor_one};
-    font-family: 'RobotoSlab_600SemiBold';
+    height: ${`${height * 0.25}px`};
 `;
