@@ -1,28 +1,56 @@
 import styled from 'styled-components/native';
 
+import { Dimensions } from 'react-native';
 import colors from '../../style/colors';
 
-export const List = styled.FlatList``;
+const { height, width } = Dimensions.get('window');
 
-export const Search = styled.View`
-    margin-top: 5px;
-    margin-bottom: 10px;
-    flex-direction: row;
-    align-items: center;
-    background: ${colors.search};
-    border-radius: 6px;
-    align-self: center;
+export const Container = styled.View`
+    flex-direction: column;
 `;
 
-export const IconComponent = styled.TouchableOpacity`
-    width: 24px;
-    height: 24px;
-    left: 10px;
+export const Grid = styled.View`
+    align-items: flex-end;
+    padding-right: ${`${width * 0.03}px`};
+    bottom: ${`${height * 0.05}px`};
+`;
+
+export const Title = styled.Text`
+    font-size: ${`${width * 0.08}px`};
+    color: ${colors.fcolor_one};
+    font-family: 'RobotoSlab_600SemiBold';
+`;
+
+export const Search = styled.View`
+    width: ${`${width * 0.9}px`};
+    height: ${`${height * 0.08}px`};
+    left: ${`${width * 0.04}px`};
+    flex-direction: row;
+    align-items: center;
+    border-radius: 6px;
+    background: ${colors.background_two};
+    margin-bottom: ${`${height * 0.01}px`};
+    bottom: ${`${height * 0.025}px`};
 `;
 
 export const InComponent = styled.TextInput`
-    width: 300px;
+    width: ${`${width * 0.9}px`};
+    height: ${`${height * 0.08}px`};
     height: 40px;
-    font-size: 16px;
-    padding: 10px;
+    font-size: ${`${width * 0.04}px`};
+    padding-left: ${`${width * 0.04}px`};
+    font-family: 'RobotoSlab_700Bold';
+    color: ${colors.fcolor_two};
 `;
+
+export const IconComponent = styled.TouchableOpacity`
+    background: ${colors.background_six};
+    width: ${`${width * 0.13}px`};
+    height: ${`${height * 0.07}px`};
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    right: ${`${width * 0.15}px`};
+`;
+
+export const List = styled.FlatList``;

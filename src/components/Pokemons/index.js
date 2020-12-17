@@ -1,14 +1,20 @@
-/* eslint-disable react/jsx-boolean-value */
-/* eslint-disable prefer-template */
-/* eslint-disable prefer-const */
 import React, { useEffect, useState } from 'react';
+
+import { Alert, Keyboard, Dimensions } from 'react-native';
 
 import { Feather } from '@expo/vector-icons';
 
-import { Alert } from 'react-native';
-import { List, Search, IconComponent, InComponent } from './styles';
+import {
+    Container,
+    Grid,
+    Title,
+    List,
+    Search,
+    InComponent,
+    IconComponent,
+} from './styles';
 
-import { Card, Avatar, Tag, Line, Data, Info } from '../Card/styles';
+import { Card, Avatar, Line, Data } from '../Card/styles';
 
 import api from '../../services/api';
 import colors from '../../style/colors';
@@ -16,6 +22,8 @@ import colors from '../../style/colors';
 export default function Pokemons({ navigation }) {
     const [poke, setPoke] = useState([]);
     const [wantedPokemon, setWantedpokemon] = useState();
+
+    const { height, width } = Dimensions.get('window');
 
     async function loadData() {
         const response = await api.get('pokemon');
@@ -25,10 +33,18 @@ export default function Pokemons({ navigation }) {
         results.forEach(async (r) => {
             const res = await api.get(`pokemon/${r.name}`);
 
-            let { id, name, height, weight, types, sprites, stats } = res.data;
+            const {
+                id,
+                name,
+                height,
+                weight,
+                types,
+                sprites,
+                stats,
+            } = res.data;
 
             if (res.data) {
-                let pok = {
+                const pok = {
                     i: String(id),
                     n: name,
                     h: height,
@@ -47,76 +63,72 @@ export default function Pokemons({ navigation }) {
     }
 
     useEffect(() => {
-        loadData();
+        if (poke.length === 0) {
+            loadData();
+        }
     }, []);
 
     const renderItem = ({ item }) => (
         <Card onPress={() => navigation.navigate('Detail', { item })}>
-            <Tag>
-                <Info
-                    style={{
-                        fontSize: 15,
-                        color: colors.num,
-                    }}
-                >
-                    # {item.i}
-                </Info>
-
-                <Avatar source={{ uri: item.s }} />
-            </Tag>
-
-            <Line>
-                <Info
-                    style={{
-                        fontSize: 16,
-                        fontFamily: 'RobotoSlab_400Regular',
-                    }}
-                >
-                    Name:
-                </Info>
-
+            <Line style={{ alignItems: 'center', bottom: height * 0.15 }}>
                 <Data
                     style={{
-                        fontSize: 16,
-                        fontFamily: 'RobotoSlab_600SemiBold',
-                        left: 5,
+                        top: height * 0.03,
+                        fontSize: width * 0.05,
+                        color: colors.fcolor_one,
                     }}
                 >
                     {item.n}
                 </Data>
             </Line>
 
-            <Line>
-                <Info
+            {item.t.length > 1 ? (
+                <Line
                     style={{
-                        fontSize: 14,
-                        fontFamily: 'RobotoSlab_400Regular',
+                        paddingLeft: width * 0.03,
+                        bottom: height * 0.05,
                     }}
                 >
-                    Types:
-                </Info>
-                {item.t.length > 1 ? (
                     <Data
                         style={{
-                            fontSize: 14,
-                            fontFamily: 'RobotoSlab_600SemiBold',
-                            left: 5,
-                        }}
-                    >
-                        {item.t[0].type.name},{item.t[1].type.name}
-                    </Data>
-                ) : (
-                    <Data
-                        style={{
-                            fontSize: 14,
-                            fontFamily: 'RobotoSlab_600SemiBold',
-                            left: 5,
+                            justifyContent: 'flex-start',
+                            fontSize: width * 0.042,
+                            color: colors.fcolor_one,
                         }}
                     >
                         {item.t[0].type.name}
                     </Data>
-                )}
-            </Line>
+
+                    <Data
+                        style={{
+                            justifyContent: 'flex-start',
+                            fontSize: width * 0.042,
+                            color: colors.fcolor_one,
+                        }}
+                    >
+                        {item.t[1].type.name}
+                    </Data>
+                </Line>
+            ) : (
+                <Line
+                    style={{
+                        paddingLeft: width * 0.03,
+                        paddingTop: height * 0.03,
+                        bottom: height * 0.08,
+                    }}
+                >
+                    <Data
+                        style={{
+                            justifyContent: 'flex-start',
+                            fontSize: width * 0.042,
+                            color: colors.fcolor_one,
+                        }}
+                    >
+                        {item.t[0].type.name}
+                    </Data>
+                </Line>
+            )}
+            <Avatar source={{ uri: item.s }} />
         </Card>
     );
 
@@ -124,12 +136,12 @@ export default function Pokemons({ navigation }) {
         if (!wantedPokemon) {
             Alert.alert('Type the pokemon name!');
         } else {
-            let convert = String(wantedPokemon).toLowerCase();
+            const convert = String(wantedPokemon).toLowerCase();
 
             (async () => {
                 try {
                     const response = await api.get(`pokemon/${convert}`);
-                    let {
+                    const {
                         id,
                         name,
                         height,
@@ -140,7 +152,7 @@ export default function Pokemons({ navigation }) {
                     } = response.data;
 
                     if (response.data) {
-                        let pok = {
+                        const pok = {
                             i: String(id),
                             n: name,
                             h: height,
@@ -157,6 +169,8 @@ export default function Pokemons({ navigation }) {
                     }
                 } catch (error) {
                     Alert.alert('Error! The pokemon does not exist!');
+                    Keyboard.dismiss();
+                    setWantedpokemon('');
                 }
             })();
         }
@@ -167,36 +181,36 @@ export default function Pokemons({ navigation }) {
     }
 
     return (
-        <>
+        <Container>
+            <Grid>
+                <Title>Pokedex</Title>
+            </Grid>
             <Search>
-                <IconComponent onPress={searchPoke}>
-                    <Feather name="search" size={20} color={colors.num} />
-                </IconComponent>
                 <InComponent
-                    placeholder="Type the pokémon name"
-                    placeholderTextColor={colors.num}
-                    style={{
-                        fontFamily: 'RobotoSlab_400Regular',
-                        color: 'white',
-                    }}
+                    placeholder="Search"
+                    placeholderTextColor={colors.fcolor_two}
                     autoCorrect={false}
                     autoCapitalize="none"
                     onChangeText={(text) => setWantedpokemon(text)}
                     value={wantedPokemon}
                     onSubmitEditing={searchPoke}
                 />
+                <IconComponent onPress={searchPoke}>
+                    <Feather
+                        name="search"
+                        size={height * 0.027}
+                        color={colors.background_one}
+                    />
+                </IconComponent>
             </Search>
 
             <List
                 data={poke}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.i}
-                showsVerticalScrollIndicator={false}
-                contentContainerStyle={{
-                    alignItems: 'center',
-                }}
-                numColumns={2}
+                showsHorizontalScrollIndicator={false}
+                horizontal
             />
-        </>
+        </Container>
     );
 }

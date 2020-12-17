@@ -1,38 +1,33 @@
 import styled from 'styled-components/native';
 
+import { Dimensions } from 'react-native';
 import colors from '../../style/colors';
 
-export const Card = styled.TouchableOpacity`
-    width: 150px;
-    height: 150px;
-    align-items: center;
-    border-radius: 8px;
-    background-color: ${colors.view};
-    margin: 5px;
-`;
+const { height, width } = Dimensions.get('window');
 
-export const Tag = styled.View`
-    flex-direction: row;
+export const Card = styled.TouchableOpacity`
+    width: ${`${width * 0.35}px`};
+    height: ${`${height * 0.46}px`};
+    border-radius: 20px;
+    background-color: ${colors.background_tree};
+    margin: 1px 10px;
+    justify-content: flex-end;
 `;
 
 export const Avatar = styled.Image`
-    width: 60px;
-    height: 60px;
-    margin: 15px;
+    height: ${`${height * 0.2}px`};
 `;
 
-export const Line = styled.View`
-    flex-direction: row;
-    justify-content: center;
-    margin: 5px;
-`;
+export const Line = styled.View``;
 
 export const Info = styled.Text`
-    color: ${colors.key};
+    color: ${colors.fcolor_one};
     text-transform: capitalize;
+    font-family: 'RobotoSlab_600SemiBold';
 `;
 
 export const Data = styled.Text`
-    color: ${colors.value};
+    color: ${colors.fcolor_two};
     text-transform: capitalize;
+    font-family: 'RobotoSlab_600SemiBold';
 `;
