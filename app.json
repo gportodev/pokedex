@@ -21,7 +21,9 @@
     },
     "android": {
 
-      "package": "com.gamonpo.pokemon"
+      "package": "com.gamonpo.pokemon",
+      "versionCode": 3,
+      "permissions": []
     },
     "web": {
     }

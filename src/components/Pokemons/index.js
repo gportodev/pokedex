@@ -183,7 +183,7 @@ export default function Pokemons({ navigation }) {
     return (
         <Container>
             <Grid>
-                <Title>Pokedex</Title>
+                <Title>PokeApp</Title>
             </Grid>
             <Search>
                 <InComponent
