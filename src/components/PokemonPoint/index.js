@@ -16,8 +16,6 @@ export default function PokemonPoint({ number }) {
         }
     }
 
-    console.log(maxArr);
-
     return (
         <GridPoint>
             {maxArr.map((e) =>
