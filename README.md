@@ -30,4 +30,3 @@
 
 - API: https://pokeapi.co/
  
-### Design created by https://www.linkedin.com/in/issafe/
