@@ -1,4 +1,4 @@
-# Pokedex
+# PokeApp
 
 [![](src/assets/home.png)](https://youtu.be/If-iSOLAFC8)
 
