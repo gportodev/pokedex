@@ -21,6 +21,7 @@
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.10",
     "expo-progress": "^0.0.2",
+    "expo-splash-screen": "^0.27.5",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -51,5 +52,7 @@
     "prettier": "^2.2.1",
     "typescript": "~5.3.3"
   },
-  "private": true
+  "private": true,
+  "name": "pokeapp",
+  "version": "1.0.0"
 }
