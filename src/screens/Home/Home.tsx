@@ -2,11 +2,11 @@ import React from 'react';
 
 import { Container } from '../../components/Back/styles';
 
-import Header from '../../components/Header';
-import Pokemons from '../../components/Pokemons';
-import Bottom from '../../components/Bottom';
+import {Header} from '../../components/Header';
+import {Pokemons} from '../../components/Pokemons';
+import {Bottom} from '../../components/Bottom';
 
-export default function Home({ navigation }) {
+function Home({ navigation }) {
     return (
         <Container>
             <Header />
@@ -17,3 +17,5 @@ export default function Home({ navigation }) {
         </Container>
     );
 }
+
+export { Home }

@@ -1,7 +1,6 @@
 import styled from 'styled-components/native';
 
 import { Dimensions } from 'react-native';
-import colors from '../../style/colors';
 
 const { height, width } = Dimensions.get('window');
 
@@ -9,7 +8,7 @@ export const Card = styled.TouchableOpacity`
     width: ${`${width * 0.35}px`};
     height: ${`${height * 0.46}px`};
     border-radius: 20px;
-    background-color: ${colors.background_tree};
+    background-color: ${({ theme })=> theme.background_tree};
     margin: 1px 10px;
     justify-content: flex-end;
 `;
@@ -21,13 +20,13 @@ export const Avatar = styled.Image`
 export const Line = styled.View``;
 
 export const Info = styled.Text`
-    color: ${colors.fcolor_one};
+    color: ${({ theme })=> theme.fcolor_one};
     text-transform: capitalize;
     font-family: 'RobotoSlab_600SemiBold';
 `;
 
 export const Data = styled.Text`
-    color: ${colors.fcolor_two};
+    color: ${({ theme })=> theme.fcolor_two};
     text-transform: capitalize;
     font-family: 'RobotoSlab_600SemiBold';
 `;

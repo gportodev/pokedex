@@ -4,10 +4,12 @@ import { VLogo, Logo } from './styles';
 
 import img from '../../assets/head.png';
 
-export default function Header() {
+function Header(): JSX.Element {
     return (
         <VLogo>
             <Logo source={img} />
         </VLogo>
     );
 }
+
+export { Header }

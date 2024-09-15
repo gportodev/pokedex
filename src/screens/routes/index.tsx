@@ -3,13 +3,13 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { createStackNavigator } from '@react-navigation/stack';
+import { Home } from '../Home';
+import { Detail } from '../Detail';
 
-import Home from './pages/Home';
-import Detail from './pages/Detail';
 
 const Stack = createStackNavigator();
 
-export default function Routes() {
+function Routes(): JSX.Element {
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -19,3 +19,5 @@ export default function Routes() {
         </NavigationContainer>
     );
 }
+
+export { Routes }

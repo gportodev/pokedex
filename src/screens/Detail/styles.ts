@@ -1,13 +1,12 @@
 import styled from 'styled-components/native';
 
 import { Dimensions } from 'react-native';
-import colors from '../../style/colors';
 
 const { height, width } = Dimensions.get('window');
 
 export const Container = styled.ScrollView`
     flex: 1;
-    background-color: ${colors.background_tree};
+    background-color: ${({ theme }) => theme.background_tree};
 `;
 
 export const VLogo = styled.View`
@@ -26,7 +25,7 @@ export const GoBack = styled.TouchableOpacity`
     justify-content: center;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
-    background-color: ${colors.background_one};
+    background-color: ${({ theme }) => theme.background_one};
 `;
 
 export const PokeInfo = styled.View`
@@ -53,13 +52,13 @@ export const Tag = styled.View`
 export const PokeStats = styled.View`
     width: ${`${width}px`};
     height: ${`${height * 1}px`};
-    background-color: ${colors.background_one};
+    background-color: ${({ theme }) => theme.background_one};
     align-items: center;
 `;
 
 export const PokeData = styled.View`
     top: 5%;
-    background-color: ${colors.background_six};
+    background-color: ${({ theme }) => theme.background_six};
     width: ${`${width * 0.9}px`};
     height: ${`${height * 0.3}px`};
     border-radius: 8px;
@@ -67,7 +66,7 @@ export const PokeData = styled.View`
 
 export const FamilyTree = styled.TouchableOpacity`
     top: 8%;
-    background-color: ${colors.background_six};
+    background-color: ${({ theme }) => theme.background_six};
     width: ${`${width * 0.9}px`};
     height: ${`${height * 0.1}px`};
     border-radius: 8px;
