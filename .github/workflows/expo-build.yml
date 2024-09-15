@@ -1,12 +1,9 @@
-name: Expo Build
+
 
 on:
   push:
     branches:
-      - main  # or the branch you want to trigger builds on
-  pull_request:
-    branches:
-      - main
+      - develop
 
 jobs:
   eas-build:
