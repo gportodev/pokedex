@@ -11,9 +11,21 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "credentialsSource": "remote",
+      "autoIncrement": true,
+      "android": {
+        "autoIncrement": "versionCode"
+      },
+      "channel": "production"
+    }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "track": "internal",
+        "releaseStatus": "draft"
+      }
+    }
   }
 }
