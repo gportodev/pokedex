@@ -3,10 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 
 import { Dimensions } from 'react-native';
-import colors from '../../style/colors';
 
-import Bottom from '../../components/Bottom';
-import PokemonPoint from '../../components/PokemonPoint';
+import {Bottom} from '../../components/Bottom';
+
 import { Card, Line, Data } from '../../components/Card/styles';
 
 import {
@@ -24,11 +23,13 @@ import {
     FamilyTree,
 } from './styles';
 
-import img from '../../assets/head.png';
+import img from '@/assets/head.png';
 
-import api from '../../services/api';
+import api from '@/services/api';
+import { PokemonPoint } from '@/components/PokemonPoint';
+import theme from '@/style/theme';
 
-export default function Detail({ route, navigation }) {
+function Detail({ route, navigation }) {
     const { item } = route.params;
 
     const [evolution, setEvolution] = useState([]);
@@ -189,7 +190,7 @@ export default function Detail({ route, navigation }) {
                     <AntDesign
                         name="left"
                         size={24}
-                        color={colors.fcolor_one}
+                        color={theme.fcolor_one}
                     />
                 </GoBack>
             </VLogo>
@@ -212,7 +213,7 @@ export default function Detail({ route, navigation }) {
                                     style={{
                                         fontSize: width * 0.06,
                                         fontFamily: 'RobotoSlab_600SemiBold',
-                                        color: colors.fcolor_one,
+                                        color: theme.fcolor_one,
                                     }}
                                 >
                                     {item.t[0].type.name}
@@ -222,7 +223,7 @@ export default function Detail({ route, navigation }) {
                                     style={{
                                         fontSize: width * 0.06,
                                         fontFamily: 'RobotoSlab_600SemiBold',
-                                        color: colors.fcolor_one,
+                                        color: theme.fcolor_one,
                                     }}
                                 >
                                     {item.t[1].type.name}
@@ -233,7 +234,7 @@ export default function Detail({ route, navigation }) {
                                 style={{
                                     fontSize: width * 0.06,
                                     fontFamily: 'RobotoSlab_600SemiBold',
-                                    color: colors.fcolor_one,
+                                    color: theme.fcolor_one,
                                 }}
                             >
                                 {item.t[0].type.name}
@@ -250,7 +251,7 @@ export default function Detail({ route, navigation }) {
                                 style={{
                                     fontSize: width * 0.09,
                                     fontFamily: 'RobotoSlab_600SemiBold',
-                                    color: colors.fcolor_one,
+                                    color: theme.fcolor_one,
                                 }}
                             >
                                 {item.n}
@@ -260,7 +261,7 @@ export default function Detail({ route, navigation }) {
                                 <Data
                                     style={{
                                         fontSize: width * 0.04,
-                                        color: colors.fcolor_one,
+                                        color: theme.fcolor_one,
                                     }}
                                 >
                                     #{item.i}
@@ -401,7 +402,7 @@ export default function Detail({ route, navigation }) {
                                         style={{
                                             top: height * 0.03,
                                             fontSize: width * 0.05,
-                                            color: colors.fcolor_one,
+                                            color: theme.fcolor_one,
                                         }}
                                     >
                                         {e.n}
@@ -419,7 +420,7 @@ export default function Detail({ route, navigation }) {
                                             style={{
                                                 justifyContent: 'flex-start',
                                                 fontSize: width * 0.042,
-                                                color: colors.fcolor_one,
+                                                color: theme.fcolor_one,
                                             }}
                                         >
                                             {e.t[0].type.name}
@@ -429,7 +430,7 @@ export default function Detail({ route, navigation }) {
                                             style={{
                                                 justifyContent: 'flex-start',
                                                 fontSize: width * 0.042,
-                                                color: colors.fcolor_one,
+                                                color: theme.fcolor_one,
                                             }}
                                         >
                                             {e.t[1].type.name}
@@ -447,7 +448,7 @@ export default function Detail({ route, navigation }) {
                                             style={{
                                                 justifyContent: 'flex-start',
                                                 fontSize: width * 0.042,
-                                                color: colors.fcolor_one,
+                                                color: theme.fcolor_one,
                                             }}
                                         >
                                             {e.t[0].type.name}
@@ -465,3 +466,5 @@ export default function Detail({ route, navigation }) {
         </Container>
     );
 }
+
+export { Detail } 

@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { GridPoint, PointActive, PointInactive } from './styles';
+import theme from '@/style/theme';
 
-import colors from '../../style/colors';
 
-export default function PokemonPoint({ number }) {
+function PokemonPoint({ number }) {
     const maxArr = [];
     const num = number / 10;
 
@@ -21,14 +21,16 @@ export default function PokemonPoint({ number }) {
             {maxArr.map((e) =>
                 e ? (
                     <PointActive
-                        style={{ backgroundColor: colors.background_four }}
+                        style={{ backgroundColor: theme.background_four }}
                     />
                 ) : (
                     <PointInactive
-                        style={{ backgroundColor: colors.background_five }}
+                        style={{ backgroundColor: theme.background_five }}
                     />
                 )
             )}
         </GridPoint>
     );
 }
+
+export { PokemonPoint }

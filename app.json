@@ -20,12 +20,19 @@
       "supportsTablet": true
     },
     "android": {
-
       "package": "com.gamonpo.pokemon",
       "versionCode": 3,
       "permissions": []
     },
-    "web": {
+    "web": {},
+    "plugins": [
+      "expo-asset",
+      "expo-font"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b6a0ebc1-94d6-41e3-9d16-bf57170c61fb"
+      }
     }
   }
 }

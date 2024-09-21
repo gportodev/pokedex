@@ -17,9 +17,9 @@ import {
 import { Card, Avatar, Line, Data } from '../Card/styles';
 
 import api from '../../services/api';
-import colors from '../../style/colors';
+import theme from '@/style/theme';
 
-export default function Pokemons({ navigation }) {
+function Pokemons({ navigation }) {
     const [poke, setPoke] = useState([]);
     const [wantedPokemon, setWantedpokemon] = useState();
 
@@ -75,7 +75,7 @@ export default function Pokemons({ navigation }) {
                     style={{
                         top: height * 0.03,
                         fontSize: width * 0.05,
-                        color: colors.fcolor_one,
+                        color: theme.fcolor_one,
                     }}
                 >
                     {item.n}
@@ -93,7 +93,7 @@ export default function Pokemons({ navigation }) {
                         style={{
                             justifyContent: 'flex-start',
                             fontSize: width * 0.042,
-                            color: colors.fcolor_one,
+                            color: theme.fcolor_one,
                         }}
                     >
                         {item.t[0].type.name}
@@ -103,7 +103,7 @@ export default function Pokemons({ navigation }) {
                         style={{
                             justifyContent: 'flex-start',
                             fontSize: width * 0.042,
-                            color: colors.fcolor_one,
+                            color: theme.fcolor_one,
                         }}
                     >
                         {item.t[1].type.name}
@@ -121,7 +121,7 @@ export default function Pokemons({ navigation }) {
                         style={{
                             justifyContent: 'flex-start',
                             fontSize: width * 0.042,
-                            color: colors.fcolor_one,
+                            color: theme.fcolor_one,
                         }}
                     >
                         {item.t[0].type.name}
@@ -188,7 +188,7 @@ export default function Pokemons({ navigation }) {
             <Search>
                 <InComponent
                     placeholder="Search"
-                    placeholderTextColor={colors.fcolor_two}
+                    placeholderTextColor={theme.fcolor_two}
                     autoCorrect={false}
                     autoCapitalize="none"
                     onChangeText={(text) => setWantedpokemon(text)}
@@ -199,7 +199,7 @@ export default function Pokemons({ navigation }) {
                     <Feather
                         name="search"
                         size={height * 0.027}
-                        color={colors.background_one}
+                        color={theme.background_one}
                     />
                 </IconComponent>
             </Search>
@@ -214,3 +214,5 @@ export default function Pokemons({ navigation }) {
         </Container>
     );
 }
+
+export { Pokemons }

@@ -8,8 +8,11 @@ import {
     RobotoSlab_600SemiBold,
     RobotoSlab_700Bold,
 } from '@expo-google-fonts/roboto-slab';
+import { Routes } from '@/screens/routes';
+import { ThemeProvider } from 'styled-components';
+import theme from '@/style/theme';
 
-import Route from './src/routes';
+
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -23,9 +26,9 @@ export default function App() {
     }
 
     return (
-        <>
-            <StatusBar auto />
-            <Route />
-        </>
+        <ThemeProvider theme={theme}>
+            <StatusBar />
+            <Routes />
+        </ThemeProvider>
     );
 }

@@ -4,10 +4,12 @@ import { VLogo, Logo } from './styles';
 
 import img from '../../assets/bottom.png';
 
-export default function Bottom() {
+function Bottom(): JSX.Element {
     return (
         <VLogo>
             <Logo source={img} />
         </VLogo>
     );
 }
+
+export { Bottom }
