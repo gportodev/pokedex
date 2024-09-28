@@ -32,7 +32,6 @@ jobs:
 
       - name: Increment app version
         run: |
-          yarn add fs
           node version-increment.js
 
       # - name: Get configs
