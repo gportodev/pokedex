@@ -29,11 +29,7 @@ jobs:
 
       - name: Install dependencies
         run: yarn install
-
-      - name: Increment app version
-        run: |
-          node version-increment.js
-
+        
       # - name: Get configs
       #   env: 
       #     GOOGLE_SERVICES_64: ${{ secrets.EAS_GOOGLE_PLAY_API }}
