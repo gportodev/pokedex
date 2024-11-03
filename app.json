@@ -19,6 +19,11 @@
         },
         "android": {
             "package": "com.gamonpo.pokeapp",
+            "splash": {
+              "resizeMode": "contain",
+            "backgroundColor": "#28262E"
+
+            },
             "versionCode": 3,
             "permissions": []
         },

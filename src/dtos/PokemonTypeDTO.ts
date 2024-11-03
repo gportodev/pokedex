@@ -1,7 +1,7 @@
 import { NamedAPIResource } from './NamedAPIResourceDTO';
 import { Type } from './TypeDTO';
 
-export interface PokemonType {
+export interface PokemonTypeDTO {
   slot: number;
   type: NamedAPIResource<Type>;
 }

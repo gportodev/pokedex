@@ -7,7 +7,7 @@ import { PokemonMove } from './PokemonMoveDTO';
 import { PokemonTypePast } from './PokemonTypePastDTO';
 import { PokemonCries } from './PokemonCriesDTO';
 import { PokemonStat } from './PokemonStatDTO';
-import { PokemonType } from './PokemonTypeDTO';
+import { PokemonTypeDTO } from './PokemonTypeDTO';
 import { PokemonSprites } from './PokemonSpritesDTO';
 import { PokemonSpecies } from './PokemonSpeciesDTO';
 
@@ -30,5 +30,7 @@ export interface PokemonDTO {
   cries: PokemonCries;
   species: NamedAPIResource<PokemonSpecies>;
   stats: PokemonStat[];
-  types: PokemonType[];
+  types: PokemonTypeDTO[];
+  avatar: string;
+  weaknesses: string[];
 }
