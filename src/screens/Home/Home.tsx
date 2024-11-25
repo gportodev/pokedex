@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
 
 import { Pokemons } from '../../components/Pokemons';
-import { SafeAreaView, ScrollView } from 'react-native';
-import theme from '@/style/theme';
-import { Header } from '@/components/Header';
+import { SafeAreaView } from 'react-native';
+
 import { HomeProps } from '@/routes/types';
 import { PokemonDTO } from '@/dtos/PokemonDTO';
+import theme from '@/style/theme';
 
 function Home({ navigation }: HomeProps): JSX.Element {
   const onPress = useCallback(
@@ -19,17 +19,10 @@ function Home({ navigation }: HomeProps): JSX.Element {
     <SafeAreaView
       style={{
         flex: 1,
+        backgroundColor: theme.white,
       }}
     >
-      <ScrollView
-        style={{
-          backgroundColor: theme.white,
-        }}
-      >
-        <Header />
-
-        <Pokemons onPress={onPress} />
-      </ScrollView>
+      <Pokemons onPress={onPress} />
     </SafeAreaView>
   );
 }
