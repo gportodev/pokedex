@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { Animated, View } from 'react-native';
 import styles from './styles';
 
@@ -7,19 +7,52 @@ type ProgressBarProps = {
 };
 
 function ProgressBar({ progress }: ProgressBarProps): JSX.Element {
-  const widthAnim = useRef(new Animated.Value(0)).current;
+  const maxWidth = 36;
+
+  const animatedValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    Animated.timing(widthAnim, {
-      toValue: progress * 100,
-      duration: 500,
+    Animated.timing(animatedValue, {
+      toValue: progress,
+      duration: 1000,
       useNativeDriver: false,
     }).start();
-  }, [progress, widthAnim]);
+  }, [animatedValue, progress]);
+
+  const renderBlocks = useCallback(() => {
+    return (
+      <>
+        {[...Array(5)].map((_, index) => {
+          const width = animatedValue.interpolate({
+            inputRange: [index * maxWidth, (index + 1) * maxWidth],
+            outputRange: [0, maxWidth],
+            extrapolate: 'clamp',
+          });
+
+          return (
+            <View key={index} style={styles.container}>
+              <Animated.View
+                style={[
+                  styles.progressContainer,
+                  {
+                    width,
+                  },
+                ]}
+              />
+            </View>
+          );
+        })}
+      </>
+    );
+  }, [animatedValue]);
 
   return (
-    <View style={styles.container}>
-      <Animated.View style={[styles.progressContainer, { width: widthAnim }]} />
+    <View
+      style={{
+        flexDirection: 'row',
+      }}
+    >
+      {renderBlocks()}
     </View>
   );
 }

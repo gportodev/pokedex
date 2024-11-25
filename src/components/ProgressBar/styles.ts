@@ -4,12 +4,12 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     backgroundColor: theme.greyish_blue,
-    borderRadius: 8,
-    width: 100,
+    flexDirection: 'row',
+    width: 36,
+    marginHorizontal: 2,
   },
   progressContainer: {
-    height: 14,
+    height: 3,
     backgroundColor: theme.strong_red,
-    borderRadius: 8,
   },
 });
