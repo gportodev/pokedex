@@ -1,19 +1,47 @@
+import { Fonts } from '@/constants/fonts';
 import theme from '@/style/theme';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    gap: 30,
     paddingVertical: 32,
   },
-  grid: {
-    backgroundColor: theme.white,
-    borderRadius: 100,
-    borderWidth: 1,
-    borderColor: theme.greyish_blue,
-    marginHorizontal: 24,
+  header: {
+    paddingTop: 24,
+    gap: 24,
+    elevation: 5,
+    backgroundColor: theme.greyish_blue,
+    borderBottomWidth: 10,
+    borderBottomColor: theme.greyish_blue,
+    shadowColor: theme.black,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    paddingHorizontal: 24,
+    justifyContent: 'space-between',
+  },
+  infoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 18,
   },
   listContainer: {
-    paddingVertical: 10,
+    padding: 24,
+    gap: 10,
+  },
+  listColumn: {
+    gap: 10,
+  },
+
+  loadingView: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loadingText: {
+    fontFamily: Fonts.montserrat_semibold,
+    fontSize: 18,
+    color: theme.gray_bold,
+    textAlign: 'center',
   },
 });

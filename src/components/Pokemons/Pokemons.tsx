@@ -13,16 +13,17 @@ import {
   SafeAreaView,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { usePokemon } from '@/context/pokemons';
 import { Loader } from '../Loader';
+import { PokeballIcon } from '@/assets/icons/Loader';
 
 type PokemonsProps = {
   onPress: (item: PokemonDTO) => void;
 };
 
 function Pokemons({ onPress }: PokemonsProps) {
-  const { pokemonList, loading } = usePokemon();
+  const { pokemonList, loading, pokemonLength } = usePokemon();
   const [wantedPokemon, setWantedPokemon] = useState('');
 
   const filteredPokemons = useMemo(() => {
@@ -39,24 +40,27 @@ function Pokemons({ onPress }: PokemonsProps) {
   );
 
   return loading || pokemonList.length === 0 ? (
-    <SafeAreaView
-      style={{
-        paddingTop: '50%',
-      }}
-    >
+    <SafeAreaView style={styles.loadingView}>
       <Loader />
+
+      <Text style={styles.loadingText}>Loading pokemons...</Text>
     </SafeAreaView>
   ) : (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-          <View style={styles.grid}>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.header}>
             <Input
               wantedPokemon={wantedPokemon}
               setWantedPokemon={setWantedPokemon}
             />
+
+            <View style={styles.infoContainer}>
+              <PokeballIcon />
+              <Text style={styles.loadingText}>{pokemonLength} Pokémons</Text>
+            </View>
           </View>
 
           <FlatList
@@ -64,17 +68,13 @@ function Pokemons({ onPress }: PokemonsProps) {
             renderItem={renderItem}
             contentContainerStyle={styles.listContainer}
             keyExtractor={(item: PokemonDTO) => item.id.toString()}
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            // getItemLayout={(_data, index) => ({
-            //   length: 150,
-            //   offset: 150 * index,
-            //   index,
-            // })}
+            showsVerticalScrollIndicator={false}
+            numColumns={2}
             initialNumToRender={30}
             maxToRenderPerBatch={30}
+            columnWrapperStyle={styles.listColumn}
           />
-        </View>
+        </SafeAreaView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
