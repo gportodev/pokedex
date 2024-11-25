@@ -1,7 +1,7 @@
 import { NamedAPIResource } from './NamedAPIResourceDTO';
-import { Version } from './VersionDTO';
+import { VersionDTO } from './VersionDTO';
 
 export interface VersionGameIndex {
   game_index: number;
-  version: NamedAPIResource<Version>;
+  version: NamedAPIResource<VersionDTO>;
 }

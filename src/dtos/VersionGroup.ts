@@ -1,4 +1,4 @@
-export interface VersionGroup {
+export interface VersionGroupDTO {
   id: number;
   name: string;
 }

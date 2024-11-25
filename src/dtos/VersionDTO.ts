@@ -1,8 +1,10 @@
 import { NamedAPIResource } from './NamedAPIResourceDTO';
-import { VersionGroup } from './VersionGroup';
+import { NameDTO } from './NameDTO';
+import { VersionGroupDTO } from './VersionGroup';
 
-export interface Version {
+export interface VersionDTO {
   id: number;
   name: string;
-  version_group: NamedAPIResource<VersionGroup>;
+  names: NameDTO[];
+  version_group: NamedAPIResource<VersionGroupDTO>;
 }

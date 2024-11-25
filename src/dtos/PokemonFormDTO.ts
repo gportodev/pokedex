@@ -1,8 +1,8 @@
 import { NamedAPIResource } from './NamedAPIResourceDTO';
-import { Name } from './NameDTO';
+import { NameDTO } from './NameDTO';
 import { PokemonFormSprites } from './PokemonFormSpritesDTO';
 import { PokemonFormType } from './PokemonFormType';
-import { VersionGroup } from './VersionGroup';
+import { VersionGroupDTO } from './VersionGroup';
 
 export interface PokemonForm {
   id: number;
@@ -16,7 +16,7 @@ export interface PokemonForm {
   pokemon: NamedAPIResource<PokemonForm>;
   types: PokemonFormType[];
   sprites: PokemonFormSprites;
-  version_group: NamedAPIResource<VersionGroup>;
-  names: Name[];
-  form_names: Name[];
+  version_group: NamedAPIResource<VersionGroupDTO>;
+  names: NameDTO[];
+  form_names: NameDTO[];
 }

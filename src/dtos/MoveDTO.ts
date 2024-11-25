@@ -1,7 +1,7 @@
 import { NamedAPIResource } from './NamedAPIResourceDTO';
 import { Type } from './TypeDTO';
 
-export interface Move {
+export interface MoveDTO {
   id: number;
   name: string;
   accuracy: number;

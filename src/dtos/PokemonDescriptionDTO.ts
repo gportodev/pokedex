@@ -1,7 +1,7 @@
 import { LanguageDTO } from './LanguageDTO';
 import { NamedAPIResource } from './NamedAPIResourceDTO';
 
-export interface NameDTO {
-  name: string;
+export interface PokemonDescriptionDTO {
+  description: string;
   language: NamedAPIResource<LanguageDTO>;
 }
