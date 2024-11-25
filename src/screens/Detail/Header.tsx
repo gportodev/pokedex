@@ -1,7 +1,7 @@
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'expo-image';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
 import {
   getCardFromType,
@@ -9,12 +9,15 @@ import {
   PokemonType,
 } from '@/common/utils/pokemon';
 import { PokemonDTO } from '@/dtos/PokemonDTO';
+import Ionicon from '@expo/vector-icons/Ionicons';
+import theme from '@/style/theme';
 
-type Props = {
+type HeaderProps = {
   item: PokemonDTO;
+  onPress: () => void;
 };
 
-function Header({ item }: Props) {
+function Header({ item, onPress }: HeaderProps) {
   const type = item.types[0].type.name as PokemonType;
 
   const icon = () => {
@@ -63,6 +66,11 @@ function Header({ item }: Props) {
           />
         </LinearGradient>
       </LinearGradient>
+
+      <TouchableOpacity onPress={onPress} style={styles.backButtonContainer}>
+        <Ionicon name="arrow-back" size={24} color={theme.black} />
+      </TouchableOpacity>
+
       <Image
         contentFit="contain"
         source={{ uri: item.avatar }}

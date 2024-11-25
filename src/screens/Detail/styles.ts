@@ -15,6 +15,11 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
+  backButtonContainer: {
+    position: 'absolute',
+    top: 40,
+    left: 10,
+  },
   headerIconContainer: {
     backgroundColor: 'white',
     height: 40,
@@ -128,37 +133,32 @@ export default StyleSheet.create({
   },
   thirdBlockInfoContainer: {
     paddingVertical: 32,
-    justifyContent: 'center',
     alignItems: 'center',
     gap: 16,
   },
   statInfo: {
     width: '100%',
-    // gap: 10,
-    // flexWrap: 'wrap',
     flexDirection: 'row',
-    // backgroundColor: 'blue',
-    // alignItems: 'center',
-    // justifyContent: 'space-between',
-    gap: 30,
+    justifyContent: 'space-between',
   },
   statColumn: {
     flexDirection: 'column',
-    // backgroundColor: 'orange',
-    // width: '100%',
     justifyContent: 'space-between',
     gap: 12,
-  },
-  statRow: {
-    flexDirection: 'column',
-    backgroundColor: 'purple',
-    // width: '100%',
-    alignItems: 'center',
-    gap: 10,
   },
   statLabel: {
     fontSize: 14,
     fontFamily: Fonts.inter_regular,
     textTransform: 'capitalize',
+  },
+  fourthBlockInfoContainer: {
+    paddingVertical: 32,
+    alignItems: 'center',
+    gap: 16,
+  },
+  evolutionContainer: {
+    paddingVertical: 24,
+    paddingHorizontal: 24,
+    gap: 10,
   },
 });
