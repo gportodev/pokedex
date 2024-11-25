@@ -4,29 +4,43 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    width: 150,
-    height: 300,
+    width: 180,
     borderRadius: 20,
-    marginHorizontal: 10,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.white,
     elevation: 5,
-    shadowColor: '#000',
+    shadowColor: theme.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
+    padding: 16,
+  },
+  imageContainer: {
+    height: 150,
+    width: 150,
+    borderRadius: 100,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  image: {
+    height: 100,
+    width: 100,
   },
   content: {
-    top: 20,
     width: '100%',
-    gap: 10,
-    paddingHorizontal: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   data: {
     fontFamily: Fonts.inter_medium,
-    fontSize: 16,
+    fontSize: 14,
     color: theme.dark_grayish,
     textTransform: 'capitalize',
+  },
+  typeContainer: {
+    flexDirection: 'row',
+    gap: 10,
   },
 });

@@ -9,59 +9,52 @@ import {
 } from '@/common/utils/pokemon';
 import { PokemonDTO } from '@/dtos/PokemonDTO';
 
-type Props = {
+type PokemonProps = {
   item: PokemonDTO;
   onPress: (item: PokemonDTO) => void;
 };
 
-function Pokemon({ item, onPress }: Props): JSX.Element {
+function Pokemon({ item, onPress }: PokemonProps): JSX.Element {
   const { id, name, avatar, types } = item;
 
   return (
     <TouchableOpacity style={styles.container} onPress={() => onPress(item)}>
       {avatar && (
         <View
-          style={{
-            height: 130,
-            width: 130,
-            backgroundColor: getTagFromType(
-              item.types[0].type.name as PokemonType,
-            ).background,
-            borderRadius: 100,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
+          style={[
+            styles.imageContainer,
+            {
+              backgroundColor: getTagFromType(
+                item.types[0].type.name as PokemonType,
+              ).background,
+            },
+          ]}
         >
           <Image
             source={{ uri: item.avatar }}
             contentFit="contain"
-            style={{
-              height: 100,
-              width: 100,
-            }}
+            style={styles.image}
           />
         </View>
       )}
 
-      <View style={styles.content}>
-        <Text style={styles.data}>#00{id}</Text>
-        <Text style={styles.data}>{name}</Text>
+      <View>
+        <Text style={styles.data}>#{id}</Text>
 
-        <View
-          style={{
-            flexDirection: 'row',
-            gap: 10,
-          }}
-        >
-          {types &&
-            types.length > 0 &&
-            types.map(item => {
-              const { name } = item.type;
+        <View style={styles.content}>
+          <Text style={styles.data}>{name}</Text>
 
-              const Icon = getIconFromType(name as PokemonType);
+          <View style={styles.typeContainer}>
+            {types &&
+              types.length > 0 &&
+              types.map(item => {
+                const { name } = item.type;
 
-              return Icon ? <Icon key={name} width={24} height={24} /> : null;
-            })}
+                const Icon = getIconFromType(name as PokemonType);
+
+                return Icon ? <Icon key={name} width={24} height={24} /> : null;
+              })}
+          </View>
         </View>
       </View>
     </TouchableOpacity>
