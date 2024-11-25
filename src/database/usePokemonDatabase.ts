@@ -142,5 +142,20 @@ export function usePokemonDatabase() {
     }
   }
 
-  return { create, searchAll };
+  async function searchOne(name: string) {
+    try {
+      const query = 'SELECT * FROM pokemons WHERE name = ?';
+
+      const response = await database.getFirstAsync<PokemonDatabase>(
+        query,
+        name,
+      );
+
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  return { create, searchAll, searchOne };
 }
