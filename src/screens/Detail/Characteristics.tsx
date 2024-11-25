@@ -24,11 +24,11 @@ function Characteristics({
       >
         <Text style={styles.label}>
           Height:
-          <Text style={styles.value}>{' ' + height / 10}m</Text>
+          <Text style={styles.value}>{' ' + (height / 10).toFixed(1)}m</Text>
         </Text>
         <Text style={styles.label}>
           Weight:
-          <Text style={styles.value}>{' ' + weight * 0.1}kg</Text>
+          <Text style={styles.value}>{' ' + (weight * 0.1).toFixed(1)}kg</Text>
         </Text>
       </View>
 
