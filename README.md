@@ -1,30 +1,35 @@
-# PokeApp
+<p align="center">
 
-[![](src/assets/home.png)](https://youtu.be/If-iSOLAFC8)
+</p>
 
-## Requirements
+<h1 align="center">PokeApp</h1>
 
--   Package manager: Yarn/Npm;
--   Expo CLI(https://docs.expo.io/workflow/expo-cli/);
--   Expo Client(https://expo.io/tools#client);
--   React Native(https://reactnative.dev/docs/getting-started);
+<h3 align="center">PokeApp is your ultimate companion for exploring the world of Pokémon.</h3>
 
-## Steps
+<div align="center">
+  <a href="#how-to-use">How To Use</a>
+</div>
 
--   Use yarn/npm to install dependencies;
--   Start the app with: 'expo start' or 'yarn start';
--   Compatible plataforms :
-    -   Emulator:
-        -   Android Studio(https://developer.android.com/studio).
-    -   Smartphone:
-        -   Expo Client(install from the store, open it and scan the 'QR Code').
+<div align="center">
 
-## Features
 
-### Search pokemon
 
--   Search pokemon: type the pokemon name to see his info
+</div>
 
-## API
+## How To Use
 
--   API: https://pokeapi.co/
+
+```bash
+# Clone
+$ git clone https://github.com/gportodev/pokeapp.git
+
+# Go into
+$ cd pokeapp
+
+# Install dependencies
+$ yarn install
+
+# Run app
+$ yarn start
+```
+
