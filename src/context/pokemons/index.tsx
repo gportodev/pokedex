@@ -1,4 +1,3 @@
-// PokemonContext.js
 import React, {
   createContext,
   useState,
@@ -12,6 +11,7 @@ import api from '@/services/api';
 import { PokemonsDTO } from '@/dtos/PokemonsDTO';
 import { Alert } from 'react-native';
 import { usePokemonDatabase } from '@/database/usePokemonDatabase';
+import _ from 'lodash';
 
 type PokemonProps = {
   children: ReactNode;
@@ -20,17 +20,20 @@ type PokemonProps = {
 type PokemonListContext = {
   pokemonList: PokemonDTO[];
   loading: boolean;
+  pokemonLength: number;
 };
 
 const defaultValue: PokemonListContext = {
   pokemonList: [],
   loading: false,
+  pokemonLength: 0,
 };
 
 const PokemonContext = createContext(defaultValue);
 
 function PokemonProvider({ children }: PokemonProps): JSX.Element {
   const [pokemonList, setPokemonList] = useState<PokemonDTO[]>([]);
+  const [pokemonLength, setPokemonLength] = useState<number>(0);
   const [loading, setLoading] = useState(false);
   const pokemonDatabase = usePokemonDatabase();
 
@@ -38,93 +41,123 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
     try {
       setLoading(true);
 
-      const numberOfPokemons = await api.get('pokemon');
+      const numberOfPokemons = await api.get<PokemonsDTO>('pokemon');
 
-      const { count } = numberOfPokemons.data as PokemonsDTO;
+      const { count } = numberOfPokemons.data;
 
-      const response = await api.get(`pokemon?limit=${count}&offset=0`);
+      const response = await api.get<PokemonsDTO>(
+        `pokemon?limit=${count}&offset=0`,
+      );
 
-      const { results } = response.data as PokemonsDTO;
+      const { results } = response.data;
 
-      const arr = await Promise.all(
+      const arr: (PokemonDTO | null)[] = await Promise.all(
         results.map(async pokemon => {
-          const pokemonInfo = await api.get<PokemonDTO>(
-            `pokemon/${pokemon.name}`,
-          );
+          try {
+            const pokemonInfo = await api.get<PokemonDTO>(
+              `pokemon/${pokemon.name}`,
+            );
 
-          const {
-            types,
-            sprites,
-            stats,
-            abilities,
-            moves,
-            species,
-            past_types,
-            held_items,
-            game_indices,
-            forms,
-            cries,
-            is_default,
-            order,
-          } = pokemonInfo.data;
+            const {
+              types,
+              sprites,
+              stats,
+              abilities,
+              moves,
+              species,
+              past_types,
+              held_items,
+              game_indices,
+              forms,
+              cries,
+              is_default,
+              order,
+            } = pokemonInfo.data;
 
-          const pokemonWeaknesses = await Promise.all(
-            types.map(async pokemonType => {
-              const response = await api.get(`type/${pokemonType.type.name}`);
+            const statNameMap: Record<string, string> = {
+              'special-attack': 'Sp. Attack',
+              'special-defense': 'Sp. Defense',
+            };
 
-              const { damage_relations } = response.data;
+            const formattedStatsName = stats.map(statItem => {
+              return {
+                ...statItem,
+                stat: {
+                  ...statItem.stat,
+                  name: statNameMap[statItem.stat.name] || statItem.stat.name,
+                },
+              };
+            });
 
-              const { double_damage_from } = damage_relations;
+            const pokemonWeaknesses = await Promise.all(
+              types.map(async pokemonType => {
+                const response = await api.get(`type/${pokemonType.type.name}`);
 
-              const weaknesses = double_damage_from.map(
-                (item: { name: string; url: string }) => item.name,
-              );
+                const { damage_relations } = response.data;
 
-              return weaknesses;
-            }),
-          );
+                const { double_damage_from } = damage_relations;
 
-          const flattenedWeaknesses = [...new Set(pokemonWeaknesses.flat())];
+                const weaknesses = double_damage_from.map(
+                  (item: { name: string; url: string }) => item.name,
+                );
 
-          const dataToShow = {
-            ...pokemonInfo.data,
-            avatar: sprites.other['official-artwork'].front_default,
-            weaknesses: flattenedWeaknesses,
-          };
+                return weaknesses;
+              }),
+            );
 
-          const dataToStore = {
-            ...dataToShow,
-            types: JSON.stringify(types),
-            sprites: JSON.stringify(sprites),
-            stats: JSON.stringify(stats),
-            abilities: JSON.stringify(abilities),
-            moves: JSON.stringify(moves),
-            species: JSON.stringify(species),
-            past_types: JSON.stringify(past_types) || '',
-            held_items: JSON.stringify(held_items),
-            game_indices: JSON.stringify(game_indices),
-            forms: JSON.stringify(forms),
-            cries: JSON.stringify(cries),
-            is_default: is_default ? 1 : 0,
-            pokemon_order: order,
-            weaknesses: JSON.stringify(flattenedWeaknesses),
-          };
+            const flattenedWeaknesses = [...new Set(pokemonWeaknesses.flat())];
 
-          await pokemonDatabase.create(dataToStore);
+            const dataToShow = {
+              ...pokemonInfo.data,
+              avatar: sprites.other['official-artwork'].front_default,
+              weaknesses: flattenedWeaknesses,
+              stats: formattedStatsName,
+            };
 
-          return dataToShow;
+            const dataToStore = {
+              ...dataToShow,
+              types: JSON.stringify(types),
+              sprites: JSON.stringify(sprites),
+              stats: JSON.stringify(formattedStatsName),
+              abilities: JSON.stringify(abilities),
+              moves: JSON.stringify(moves),
+              species: JSON.stringify(species),
+              past_types: JSON.stringify(past_types) || '',
+              held_items: JSON.stringify(held_items),
+              game_indices: JSON.stringify(game_indices),
+              forms: JSON.stringify(forms),
+              cries: JSON.stringify(cries),
+              is_default: is_default ? 1 : 0,
+              pokemon_order: order,
+              weaknesses: JSON.stringify(flattenedWeaknesses),
+            };
+
+            await pokemonDatabase.create(dataToStore);
+
+            return dataToShow;
+          } catch (error) {
+            return null;
+          }
         }),
       );
 
-      setPokemonList(arr);
+      const validPokemonList: PokemonDTO[] = arr.filter(
+        (item): item is PokemonDTO => item !== null,
+      );
+
+      setPokemonList(validPokemonList);
     } catch (error) {
-      console.log(error);
-      console.log(JSON.stringify(error, undefined, 2));
-      Alert.alert('Error', 'Could not fetch the data');
+      Alert.alert('Error', 'Could not fetch all pokémons');
     } finally {
       setLoading(false);
     }
   }, [pokemonDatabase]);
+
+  const countUniqueSpecies = useCallback(() => {
+    const total = _.uniqBy(pokemonList, pokemon => pokemon.species.name).length;
+
+    setPokemonLength(total);
+  }, [pokemonList]);
 
   const getPokemonsList = useCallback(async (): Promise<void> => {
     try {
@@ -149,7 +182,7 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
             weaknesses,
           } = row;
 
-          const formatted = {
+          const formatted: PokemonDTO = {
             ...row,
             types: JSON.parse(types),
             sprites: JSON.parse(sprites),
@@ -183,8 +216,14 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
     getPokemonsList();
   }, []);
 
+  useEffect(() => {
+    if (pokemonList.length > 0) {
+      countUniqueSpecies();
+    }
+  }, [countUniqueSpecies, pokemonList.length]);
+
   return (
-    <PokemonContext.Provider value={{ pokemonList, loading }}>
+    <PokemonContext.Provider value={{ pokemonList, loading, pokemonLength }}>
       {children}
     </PokemonContext.Provider>
   );
