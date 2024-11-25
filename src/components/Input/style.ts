@@ -4,17 +4,18 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 17,
-    paddingHorizontal: 8,
+    height: 56,
+    justifyContent: 'center',
+    backgroundColor: theme.white,
+    borderRadius: 100,
+    borderWidth: 1,
+    borderColor: theme.greyish_blue,
   },
   input: {
-    width: '90%',
-    height: 56,
+    flex: 1,
     fontSize: 16,
-    fontFamily: Fonts.montserrat_bold,
+    fontFamily: Fonts.inter_regular,
+    paddingLeft: 50,
   },
   icon: {
     backgroundColor: theme.pastel_blue,
@@ -23,5 +24,7 @@ export default StyleSheet.create({
     borderRadius: 100,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute',
+    left: 5,
   },
 });
