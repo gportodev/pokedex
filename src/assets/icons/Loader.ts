@@ -16,3 +16,4 @@ export { default as PsychicIcon } from './svg/psychic.svg';
 export { default as RockIcon } from './svg/rock.svg';
 export { default as SteelIcon } from './svg/steel.svg';
 export { default as WaterIcon } from './svg/water.svg';
+export { default as PokeballIcon } from './svg/pokeball.svg';
