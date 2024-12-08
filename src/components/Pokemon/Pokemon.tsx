@@ -1,6 +1,5 @@
-import React, { memo } from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
-import { Image } from 'expo-image';
+import React, { memo, useMemo } from 'react';
+import { TouchableOpacity, Text, View, Image } from 'react-native';
 import styles from './styles';
 import {
   getTagFromType,
@@ -17,6 +16,18 @@ type PokemonProps = {
 function Pokemon({ item, onPress }: PokemonProps): JSX.Element {
   const { id, name, avatar, types } = item;
 
+  const pokemonTypes = useMemo(() => {
+    if (!types || types.length === 0) return null;
+
+    return types.map(item => {
+      const { name } = item.type;
+
+      const Icon = getIconFromType(name as PokemonType);
+
+      return Icon ? <Icon key={name} width={24} height={24} /> : null;
+    });
+  }, [types]);
+
   return (
     <TouchableOpacity style={styles.container} onPress={() => onPress(item)}>
       {avatar && (
@@ -30,32 +41,16 @@ function Pokemon({ item, onPress }: PokemonProps): JSX.Element {
             },
           ]}
         >
-          <Image
-            source={{ uri: item.avatar }}
-            contentFit="contain"
-            style={styles.image}
-          />
+          <Image source={{ uri: item.avatar }} style={styles.image} />
         </View>
       )}
 
-      <View>
+      <View style={styles.content}>
         <Text style={styles.data}>#{id}</Text>
 
-        <View style={styles.content}>
-          <Text style={styles.data}>{name}</Text>
+        <Text style={styles.data}>{name}</Text>
 
-          <View style={styles.typeContainer}>
-            {types &&
-              types.length > 0 &&
-              types.map(item => {
-                const { name } = item.type;
-
-                const Icon = getIconFromType(name as PokemonType);
-
-                return Icon ? <Icon key={name} width={24} height={24} /> : null;
-              })}
-          </View>
-        </View>
+        <View style={styles.typeContainer}>{pokemonTypes}</View>
       </View>
     </TouchableOpacity>
   );

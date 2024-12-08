@@ -37,6 +37,12 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
   const [loading, setLoading] = useState(false);
   const pokemonDatabase = usePokemonDatabase();
 
+  const formatName = useCallback((name: string) => {
+    const formattedName = name.replace(/-/g, ' ');
+
+    return formattedName;
+  }, []);
+
   const fetchAllPokemon = useCallback(async () => {
     try {
       setLoading(true);
@@ -59,6 +65,7 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
             );
 
             const {
+              name,
               types,
               sprites,
               stats,
@@ -109,6 +116,7 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
 
             const dataToShow = {
               ...pokemonInfo.data,
+              name: formatName(name),
               avatar: sprites.other['official-artwork'].front_default,
               weaknesses: flattenedWeaknesses,
               stats: formattedStatsName,
@@ -151,7 +159,7 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
     } finally {
       setLoading(false);
     }
-  }, [pokemonDatabase]);
+  }, [formatName, pokemonDatabase]);
 
   const countUniqueSpecies = useCallback(() => {
     const total = _.uniqBy(pokemonList, pokemon => pokemon.species.name).length;
@@ -161,6 +169,8 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
 
   const getPokemonsList = useCallback(async (): Promise<void> => {
     try {
+      setLoading(true);
+
       const response = await pokemonDatabase.searchAll();
 
       if (response.length > 0) {
@@ -209,6 +219,8 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
       }
     } catch (error) {
       Alert.alert('Error', 'List of pokemons unavailable.Try again later');
+    } finally {
+      setLoading(false);
     }
   }, [fetchAllPokemon, pokemonDatabase]);
 

@@ -1,10 +1,12 @@
 import { Fonts } from '@/constants/fonts';
 import theme from '@/style/theme';
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 export default StyleSheet.create({
   container: {
-    width: 180,
+    width: (width - 24 * 2 - 10) / 2,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -17,27 +19,30 @@ export default StyleSheet.create({
     padding: 16,
   },
   imageContainer: {
-    height: 150,
-    width: 150,
+    height: 100,
+    width: 100,
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'red',
   },
   image: {
     height: 100,
     width: 100,
+    resizeMode: 'contain',
   },
   content: {
+    paddingTop: 10,
     width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
+    gap: 10,
   },
   data: {
     fontFamily: Fonts.inter_medium,
-    fontSize: 14,
+    fontSize: 16,
     color: theme.dark_grayish,
     textTransform: 'capitalize',
+    flexShrink: 1,
   },
   typeContainer: {
     flexDirection: 'row',

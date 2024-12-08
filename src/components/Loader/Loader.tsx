@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
 import styles from './styles';
 
@@ -15,9 +15,14 @@ import img from '../../../assets/icon.png';
 type LoaderProps = {
   width?: number;
   height?: number;
+  loadingText?: string;
 };
 
-function Loader({ width = 100, height = 100 }: LoaderProps): JSX.Element {
+function Loader({
+  width = 100,
+  height = 100,
+  loadingText = '',
+}: LoaderProps): JSX.Element {
   const duration = 1000;
 
   const sv = useSharedValue<number>(0);
@@ -48,6 +53,8 @@ function Loader({ width = 100, height = 100 }: LoaderProps): JSX.Element {
           animatedStyle,
         ]}
       />
+
+      {loadingText && <Text style={styles.loadingText}>{loadingText}</Text>}
     </View>
   );
 }
