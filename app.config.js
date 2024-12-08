@@ -36,5 +36,6 @@ module.exports = {
         projectId: 'ee361421-8b4b-4ead-b120-bf0a6dc03140',
       },
     },
+    newArchEnabled: true,
   },
 };
