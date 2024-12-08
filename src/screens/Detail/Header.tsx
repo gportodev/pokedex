@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Image } from 'expo-image';
-import { SafeAreaView, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View, Image } from 'react-native';
 import styles from './styles';
 import {
   getCardFromType,
@@ -20,7 +19,7 @@ type HeaderProps = {
 function Header({ item, onPress }: HeaderProps) {
   const type = item.types[0].type.name as PokemonType;
 
-  const icon = () => {
+  const icon = useMemo(() => {
     const Icon = getIconFromType(type);
 
     return (
@@ -28,7 +27,7 @@ function Header({ item, onPress }: HeaderProps) {
         <Icon width={24} height={24} />
       </View>
     );
-  };
+  }, [type]);
 
   return (
     <SafeAreaView>
@@ -39,7 +38,7 @@ function Header({ item, onPress }: HeaderProps) {
         ]}
         style={[styles.headerContainer]}
       >
-        {icon()}
+        {icon}
         <LinearGradient
           colors={[
             getCardFromType(type).firstColor,
@@ -71,11 +70,7 @@ function Header({ item, onPress }: HeaderProps) {
         <Ionicon name="arrow-back" size={24} color={theme.black} />
       </TouchableOpacity>
 
-      <Image
-        contentFit="contain"
-        source={{ uri: item.avatar }}
-        style={styles.headerPokemonAvatar}
-      />
+      <Image source={{ uri: item.avatar }} style={styles.headerPokemonAvatar} />
     </SafeAreaView>
   );
 }

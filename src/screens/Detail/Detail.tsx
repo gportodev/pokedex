@@ -12,6 +12,7 @@ import { Characteristics } from './Characteristics';
 import { Types } from './Types';
 import { Evolutions } from './Evolutions';
 import { PokemonDTO } from '@/dtos/PokemonDTO';
+import { Forms } from './Forms';
 
 function Detail({ navigation, route }: DetailProps): JSX.Element {
   const { item } = route.params;
@@ -36,9 +37,9 @@ function Detail({ navigation, route }: DetailProps): JSX.Element {
 
         <View style={styles.infoContainer}>
           <View style={styles.infoHeaderContainer}>
-            <Text style={styles.infoHeaderName}>{name}</Text>
-
             <Text style={styles.infoHeaderId}>{'#' + id.toString()}</Text>
+
+            <Text style={styles.infoHeaderName}>{name}</Text>
           </View>
 
           <Types types={types} />
@@ -55,6 +56,8 @@ function Detail({ navigation, route }: DetailProps): JSX.Element {
         </View>
 
         <Evolutions pokemon={item} onPress={onPress} />
+
+        <Forms pokemon={item} onPress={onPress} />
       </ScrollView>
     </SafeAreaView>
   );

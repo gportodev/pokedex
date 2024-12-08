@@ -53,8 +53,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
   headerPokemonAvatar: {
-    height: 150,
-    width: 150,
+    height: 200,
+    width: 200,
     bottom: -50,
     position: 'absolute',
     alignSelf: 'center',
@@ -65,17 +65,17 @@ export default StyleSheet.create({
     paddingTop: 100,
   },
   infoHeaderContainer: {
-    flexDirection: 'row',
-    gap: 8,
+    gap: 10,
     width: '100%',
     justifyContent: 'center',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
   infoHeaderName: {
     fontSize: 24,
     fontFamily: Fonts.montserrat_bold,
     color: theme.dark_grayish,
     textTransform: 'capitalize',
+    flexShrink: 1,
   },
   infoHeaderId: {
     fontSize: 18,

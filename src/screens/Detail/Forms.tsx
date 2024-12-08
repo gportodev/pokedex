@@ -11,22 +11,27 @@ import { PokemonDTO } from '@/dtos/PokemonDTO';
 import styles from './styles';
 
 import { PokemonSpeciesDTO } from '@/dtos/PokemonSpeciesDTO';
-import { PokemonEvolutionChainDTO } from '@/dtos/PokemonEvolutionChainDTO';
 import { Loader } from '@/components/Loader';
 import { usePokemonDatabase } from '@/database/usePokemonDatabase';
 import { Pokemon } from '@/components/Pokemon';
 
-type EvolutionsProps = {
+type FormsProps = {
   pokemon: PokemonDTO;
   onPress: (pokemon: PokemonDTO) => void;
 };
 
-function Evolutions({ pokemon, onPress }: EvolutionsProps): JSX.Element {
-  const [evolutions, setEvolutions] = useState<PokemonDTO[]>([]);
+function Forms({ pokemon, onPress }: FormsProps): JSX.Element {
+  const [forms, setForms] = useState<PokemonDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const { name } = pokemon;
   const { searchOne } = usePokemonDatabase();
   const searchOneRef = useRef(searchOne);
+
+  const formatName = useCallback((name: string) => {
+    const formattedName = name.replace(/-/g, ' ');
+
+    return formattedName;
+  }, []);
 
   const getPokemonEvolutionChain = useCallback(async () => {
     try {
@@ -36,49 +41,20 @@ function Evolutions({ pokemon, onPress }: EvolutionsProps): JSX.Element {
         `/pokemon-species/${name}`,
       );
 
-      const { url } = speciesResponse.data.evolution_chain;
+      const { varieties } = speciesResponse.data;
 
-      const evolutionResponse = await api.get<PokemonEvolutionChainDTO>(url);
+      const forms = varieties.map(variety => ({
+        name: variety.pokemon.name,
+      }));
 
-      const { chain } = evolutionResponse.data;
+      if (forms.length > 0) {
+        const pokemonForms = await Promise.all(
+          forms.map(async form => {
+            const formattedName = formatName(form.name);
 
-      let evolutions: string[] = [];
+            const response = await searchOneRef.current(formattedName);
 
-      let currentEvolution = chain;
-
-      while (currentEvolution) {
-        const { evolves_to, species } = currentEvolution;
-
-        const noDuplicates = evolutions.find(
-          evolution => evolution === species.name,
-        );
-
-        if (species.name !== name && species.name !== noDuplicates) {
-          evolutions.push(species.name);
-        }
-
-        if (evolves_to.length === 0) {
-          break;
-        }
-
-        if (evolves_to.length > 1) {
-          const evolvesToFiltered = evolves_to.map(
-            evolution => evolution.species.name,
-          );
-
-          evolutions.splice(0, evolutions.length);
-
-          evolutions = [...evolvesToFiltered];
-        }
-        currentEvolution = currentEvolution.evolves_to[0];
-      }
-
-      if (evolutions.length > 0) {
-        const pokemonEvolutions = await Promise.all(
-          evolutions.map(async name => {
-            const response = await searchOneRef.current(name);
-
-            if (!response) return;
+            if (!response || response.name === pokemon.name) return;
 
             const {
               types,
@@ -119,15 +95,15 @@ function Evolutions({ pokemon, onPress }: EvolutionsProps): JSX.Element {
           }),
         );
 
-        setEvolutions(pokemonEvolutions.filter(Boolean) as PokemonDTO[]);
+        setForms(pokemonForms.filter(Boolean) as PokemonDTO[]);
       }
     } catch (error) {
-      console.error('Error fetching evolution chain:', error);
+      console.error('Error fetching forms: ', error);
       return null;
     } finally {
       setLoading(false);
     }
-  }, [name]);
+  }, [formatName, name, pokemon.name]);
 
   const renderItem = useCallback(
     ({ item }: { item: PokemonDTO }) => {
@@ -140,22 +116,22 @@ function Evolutions({ pokemon, onPress }: EvolutionsProps): JSX.Element {
     if (loading) {
       return (
         <View>
-          <Loader height={70} width={70} loadingText="Loading evolutions..." />
+          <Loader height={70} width={70} loadingText="Loading forms..." />
         </View>
       );
     }
 
     return (
       <View>
-        <Text>No evolutions found!</Text>
+        <Text>No forms found!</Text>
       </View>
     );
   }, [loading]);
 
-  const renderEvolutions = useMemo(
+  const renderForms = useMemo(
     () => (
       <FlatList
-        data={evolutions}
+        data={forms}
         renderItem={renderItem}
         contentContainerStyle={styles.evolutionContainer}
         keyExtractor={(item: PokemonDTO) => item.id.toString()}
@@ -163,7 +139,7 @@ function Evolutions({ pokemon, onPress }: EvolutionsProps): JSX.Element {
         ListEmptyComponent={renderEmpty}
       />
     ),
-    [evolutions, renderEmpty, renderItem],
+    [forms, renderEmpty, renderItem],
   );
 
   useEffect(() => {
@@ -172,11 +148,11 @@ function Evolutions({ pokemon, onPress }: EvolutionsProps): JSX.Element {
 
   return (
     <View style={styles.fourthBlockInfoContainer}>
-      <Text style={styles.title}>Family tree</Text>
+      <Text style={styles.title}>Forms</Text>
 
-      {renderEvolutions}
+      {renderForms}
     </View>
   );
 }
 
-export { Evolutions };
+export { Forms };

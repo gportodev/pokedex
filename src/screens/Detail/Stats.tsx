@@ -51,6 +51,14 @@ function Stats({ stats }: StatsProps): JSX.Element {
       value: stat.base_stat,
     }));
 
+    const totalLabel = 'Total';
+    const totalValue = stats.reduce((sum, item) => sum + item.base_stat, 0);
+
+    statsData.push({
+      label: totalLabel,
+      value: totalValue,
+    });
+
     return (
       <View style={styles.statInfo}>
         {[0, 1, 2].map(columnIndex => (
