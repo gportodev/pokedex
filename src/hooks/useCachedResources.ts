@@ -1,5 +1,6 @@
+import { useFonts } from 'expo-font';
+
 import {
-  useFonts,
   Montserrat_400Regular,
   Montserrat_600SemiBold,
   Montserrat_700Bold,
