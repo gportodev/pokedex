@@ -4,12 +4,7 @@ import styles from './styles';
 
 import { Pokemon } from '../Pokemon';
 import { PokemonDTO } from '@/dtos/PokemonDTO';
-import {
-  FlatList,
-  Keyboard,
-  SafeAreaView,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { FlatList, SafeAreaView } from 'react-native';
 import { View, Text } from 'react-native';
 import { usePokemon } from '@/context/pokemons';
 import { Loader } from '../Loader';
@@ -24,9 +19,14 @@ function Pokemons({ onPress }: PokemonsProps) {
   const [wantedPokemon, setWantedPokemon] = useState('');
 
   const filteredPokemons = useMemo(() => {
-    return pokemonList.filter(pokemon =>
-      pokemon.name.toLowerCase().includes(wantedPokemon.toLowerCase()),
-    );
+    return pokemonList.filter(pokemon => {
+      const searchText = wantedPokemon.toLowerCase();
+
+      return (
+        pokemon.name.toLowerCase().includes(searchText) ||
+        pokemon.id.toString().includes(searchText)
+      );
+    });
   }, [pokemonList, wantedPokemon]);
 
   const renderEmpty = useMemo(() => {
@@ -55,32 +55,30 @@ function Pokemons({ onPress }: PokemonsProps) {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView
-        style={{
-          flex: 1,
-        }}
-      >
-        <Header
-          value={wantedPokemon}
-          onChangeText={setWantedPokemon}
-          pokemonLength={pokemonLength}
-        />
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
+      <Header
+        value={wantedPokemon}
+        onChangeText={setWantedPokemon}
+        pokemonLength={pokemonLength}
+      />
 
-        <FlatList
-          data={filteredPokemons}
-          renderItem={renderItem}
-          numColumns={2}
-          columnWrapperStyle={styles.listColumn}
-          contentContainerStyle={styles.listContainer}
-          keyExtractor={(item: PokemonDTO) => item.id.toString()}
-          initialNumToRender={30}
-          maxToRenderPerBatch={30}
-          ListEmptyComponent={renderEmpty}
-          extraData={wantedPokemon}
-        />
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+      <FlatList
+        data={filteredPokemons}
+        renderItem={renderItem}
+        numColumns={2}
+        columnWrapperStyle={styles.listColumn}
+        contentContainerStyle={styles.listContainer}
+        keyExtractor={(item: PokemonDTO) => item.id.toString()}
+        initialNumToRender={30}
+        maxToRenderPerBatch={30}
+        ListEmptyComponent={renderEmpty}
+        extraData={wantedPokemon}
+      />
+    </SafeAreaView>
   );
 }
 

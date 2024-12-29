@@ -24,7 +24,6 @@ export default StyleSheet.create({
     borderRadius: 100,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'red',
   },
   image: {
     height: 100,

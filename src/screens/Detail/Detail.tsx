@@ -17,8 +17,16 @@ import { Forms } from './Forms';
 function Detail({ navigation, route }: DetailProps): JSX.Element {
   const { item } = route.params;
 
-  const { id, name, height, types, weight, abilities, weaknesses, stats } =
-    item;
+  const {
+    id,
+    displayName,
+    height,
+    types,
+    weight,
+    abilities,
+    weaknesses,
+    stats,
+  } = item;
 
   const onPress = (item: PokemonDTO) => {
     navigation.replace('Detail', {
@@ -39,7 +47,7 @@ function Detail({ navigation, route }: DetailProps): JSX.Element {
           <View style={styles.infoHeaderContainer}>
             <Text style={styles.infoHeaderId}>{'#' + id.toString()}</Text>
 
-            <Text style={styles.infoHeaderName}>{name}</Text>
+            <Text style={styles.infoHeaderName}>{displayName}</Text>
           </View>
 
           <Types types={types} />

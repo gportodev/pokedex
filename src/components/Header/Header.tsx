@@ -1,6 +1,13 @@
 import React from 'react';
 
-import { View, Text } from 'react-native';
+import {
+  View,
+  Text,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import styles from './styles';
 import { Input } from '../Input';
 import { PokeballIcon } from '@/assets/icons/Loader';
@@ -20,21 +27,27 @@ function Header({
   const insets = useSafeAreaInsets();
 
   return (
-    <View
-      style={[
-        styles.header,
-        {
-          paddingTop: insets.top * 2,
-        },
-      ]}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <Input wantedPokemon={value} setWantedPokemon={onChangeText} />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View
+          style={[
+            styles.header,
+            {
+              paddingTop: insets.top * 2,
+            },
+          ]}
+        >
+          <Input wantedPokemon={value} setWantedPokemon={onChangeText} />
 
-      <View style={styles.infoContainer}>
-        <PokeballIcon />
-        <Text style={styles.infoText}>{pokemonLength} Pokémons</Text>
-      </View>
-    </View>
+          <View style={styles.infoContainer}>
+            <PokeballIcon />
+            <Text style={styles.infoText}>{pokemonLength} Pokémons</Text>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 

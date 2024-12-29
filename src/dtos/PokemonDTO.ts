@@ -14,6 +14,7 @@ import { PokemonSpeciesDTO } from './PokemonSpeciesDTO';
 export interface PokemonDTO {
   id: number;
   name: string;
+  displayName: string;
   base_experience: number;
   height: number;
   is_default: boolean;
@@ -33,4 +34,5 @@ export interface PokemonDTO {
   types: PokemonTypeDTO[];
   avatar: string;
   weaknesses: string[];
+  evolutions?: string[];
 }

@@ -1,20 +1,10 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import api from '@/services/api';
+import React, { useCallback, useMemo } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { PokemonDTO } from '@/dtos/PokemonDTO';
 import styles from './styles';
 
-import { PokemonSpeciesDTO } from '@/dtos/PokemonSpeciesDTO';
-import { PokemonEvolutionChainDTO } from '@/dtos/PokemonEvolutionChainDTO';
-import { Loader } from '@/components/Loader';
-import { usePokemonDatabase } from '@/database/usePokemonDatabase';
 import { Pokemon } from '@/components/Pokemon';
+import { usePokemon } from '@/context/pokemons';
 
 type EvolutionsProps = {
   pokemon: PokemonDTO;
@@ -22,112 +12,39 @@ type EvolutionsProps = {
 };
 
 function Evolutions({ pokemon, onPress }: EvolutionsProps): JSX.Element {
-  const [evolutions, setEvolutions] = useState<PokemonDTO[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { name } = pokemon;
-  const { searchOne } = usePokemonDatabase();
-  const searchOneRef = useRef(searchOne);
+  const { pokemonList } = usePokemon();
+  const { name, evolutions } = pokemon;
 
-  const getPokemonEvolutionChain = useCallback(async () => {
-    try {
-      setLoading(true);
+  const pokemonEvolutions = useMemo(() => {
+    if (!evolutions) return [];
 
-      const speciesResponse = await api.get<PokemonSpeciesDTO>(
-        `/pokemon-species/${name}`,
-      );
-
-      const { url } = speciesResponse.data.evolution_chain;
-
-      const evolutionResponse = await api.get<PokemonEvolutionChainDTO>(url);
-
-      const { chain } = evolutionResponse.data;
-
-      let evolutions: string[] = [];
-
-      let currentEvolution = chain;
-
-      while (currentEvolution) {
-        const { evolves_to, species } = currentEvolution;
-
-        const noDuplicates = evolutions.find(
-          evolution => evolution === species.name,
-        );
-
-        if (species.name !== name && species.name !== noDuplicates) {
-          evolutions.push(species.name);
-        }
-
-        if (evolves_to.length === 0) {
-          break;
-        }
-
-        if (evolves_to.length > 1) {
-          const evolvesToFiltered = evolves_to.map(
-            evolution => evolution.species.name,
+    if (evolutions.length > 0) {
+      const pokemonEvolutions = evolutions
+        .map(evolutionName => {
+          const findPokemon = pokemonList.find(pokemon =>
+            pokemon.name.includes(evolutionName),
           );
 
-          evolutions.splice(0, evolutions.length);
+          if (findPokemon) {
+            return findPokemon;
+          }
 
-          evolutions = [...evolvesToFiltered];
-        }
-        currentEvolution = currentEvolution.evolves_to[0];
-      }
+          return;
+        })
+        .filter(pokemon => pokemon.name !== name);
 
-      if (evolutions.length > 0) {
-        const pokemonEvolutions = await Promise.all(
-          evolutions.map(async name => {
-            const response = await searchOneRef.current(name);
-
-            if (!response) return;
-
-            const {
-              types,
-              sprites,
-              abilities,
-              moves,
-              species,
-              past_types,
-              held_items,
-              game_indices,
-              forms,
-              cries,
-              stats,
-              is_default,
-              pokemon_order,
-              weaknesses,
-            } = response;
-
-            const parsedData: PokemonDTO = {
-              ...response,
-              types: JSON.parse(types),
-              sprites: JSON.parse(sprites),
-              stats: JSON.parse(stats),
-              abilities: JSON.parse(abilities),
-              moves: JSON.parse(moves),
-              species: JSON.parse(species),
-              past_types: JSON.parse(past_types),
-              held_items: JSON.parse(held_items),
-              game_indices: JSON.parse(game_indices),
-              forms: JSON.parse(forms),
-              cries: JSON.parse(cries),
-              is_default: is_default === 1,
-              order: pokemon_order,
-              weaknesses: JSON.parse(weaknesses),
-            };
-
-            return parsedData;
-          }),
-        );
-
-        setEvolutions(pokemonEvolutions.filter(Boolean) as PokemonDTO[]);
-      }
-    } catch (error) {
-      console.error('Error fetching evolution chain:', error);
-      return null;
-    } finally {
-      setLoading(false);
+      return pokemonEvolutions.filter(Boolean) as PokemonDTO[];
     }
-  }, [name]);
+
+    //Evolutions with same name
+    if (evolutions.length === 1) {
+      const findPokemon = pokemonList.filter(pokemon =>
+        pokemon.name.includes(evolutions[0]),
+      );
+
+      return findPokemon.filter(Boolean) as PokemonDTO[];
+    }
+  }, [evolutions, name, pokemonList]);
 
   const renderItem = useCallback(
     ({ item }: { item: PokemonDTO }) => {
@@ -137,25 +54,17 @@ function Evolutions({ pokemon, onPress }: EvolutionsProps): JSX.Element {
   );
 
   const renderEmpty = useMemo(() => {
-    if (loading) {
-      return (
-        <View>
-          <Loader height={70} width={70} loadingText="Loading evolutions..." />
-        </View>
-      );
-    }
-
     return (
       <View>
         <Text>No evolutions found!</Text>
       </View>
     );
-  }, [loading]);
+  }, []);
 
   const renderEvolutions = useMemo(
     () => (
       <FlatList
-        data={evolutions}
+        data={pokemonEvolutions}
         renderItem={renderItem}
         contentContainerStyle={styles.evolutionContainer}
         keyExtractor={(item: PokemonDTO) => item.id.toString()}
@@ -163,12 +72,8 @@ function Evolutions({ pokemon, onPress }: EvolutionsProps): JSX.Element {
         ListEmptyComponent={renderEmpty}
       />
     ),
-    [evolutions, renderEmpty, renderItem],
+    [pokemonEvolutions, renderEmpty, renderItem],
   );
-
-  useEffect(() => {
-    getPokemonEvolutionChain();
-  }, [getPokemonEvolutionChain]);
 
   return (
     <View style={styles.fourthBlockInfoContainer}>

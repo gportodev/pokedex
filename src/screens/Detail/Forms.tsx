@@ -1,19 +1,12 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import api from '@/services/api';
 import { View, Text, FlatList } from 'react-native';
 import { PokemonDTO } from '@/dtos/PokemonDTO';
 import styles from './styles';
 
 import { PokemonSpeciesDTO } from '@/dtos/PokemonSpeciesDTO';
-import { Loader } from '@/components/Loader';
-import { usePokemonDatabase } from '@/database/usePokemonDatabase';
 import { Pokemon } from '@/components/Pokemon';
+import { usePokemon } from '@/context/pokemons';
 
 type FormsProps = {
   pokemon: PokemonDTO;
@@ -21,89 +14,64 @@ type FormsProps = {
 };
 
 function Forms({ pokemon, onPress }: FormsProps): JSX.Element {
+  const { pokemonList } = usePokemon();
   const [forms, setForms] = useState<PokemonDTO[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { name } = pokemon;
-  const { searchOne } = usePokemonDatabase();
-  const searchOneRef = useRef(searchOne);
+  const { name, id, is_default } = pokemon;
 
-  const formatName = useCallback((name: string) => {
-    const formattedName = name.replace(/-/g, ' ');
+  // Catch pokemons forms to not default forms
+  // Ex: ogerpon
+  const getNotDefaultPokemonForms = useCallback(() => {
+    const normalizedName = name.split('-')[0].trim();
 
-    return formattedName;
-  }, []);
+    const pokemonForms = pokemonList
+      .filter(pokemon =>
+        pokemon.name.trim().toLowerCase().includes(normalizedName),
+      )
+      .filter(pokemon => pokemon.name !== name);
 
-  const getPokemonEvolutionChain = useCallback(async () => {
+    console.log(JSON.stringify(pokemonForms, undefined, 2));
+
+    setForms(pokemonForms);
+  }, [name, pokemonList]);
+
+  const getDefaultPokemonForms = useCallback(async () => {
     try {
-      setLoading(true);
-
       const speciesResponse = await api.get<PokemonSpeciesDTO>(
-        `/pokemon-species/${name}`,
+        `/pokemon-species/${id}`,
       );
 
       const { varieties } = speciesResponse.data;
 
-      const forms = varieties.map(variety => ({
-        name: variety.pokemon.name,
-      }));
+      const forms = varieties
+        .map(variety => ({
+          name: variety.pokemon.name,
+        }))
+        .filter(pokemonVariety => pokemonVariety.name !== name);
+
+      console.log(JSON.stringify(forms, undefined, 2));
+
+      if (!forms) return [];
 
       if (forms.length > 0) {
-        const pokemonForms = await Promise.all(
-          forms.map(async form => {
-            const formattedName = formatName(form.name);
+        const pokemonForms = forms.map(formName => {
+          const findPokemon = pokemonList.find(pokemon =>
+            pokemon.name.includes(formName.name),
+          );
 
-            const response = await searchOneRef.current(formattedName);
+          if (findPokemon) {
+            return findPokemon;
+          }
 
-            if (!response || response.name === pokemon.name) return;
-
-            const {
-              types,
-              sprites,
-              abilities,
-              moves,
-              species,
-              past_types,
-              held_items,
-              game_indices,
-              forms,
-              cries,
-              stats,
-              is_default,
-              pokemon_order,
-              weaknesses,
-            } = response;
-
-            const parsedData: PokemonDTO = {
-              ...response,
-              types: JSON.parse(types),
-              sprites: JSON.parse(sprites),
-              stats: JSON.parse(stats),
-              abilities: JSON.parse(abilities),
-              moves: JSON.parse(moves),
-              species: JSON.parse(species),
-              past_types: JSON.parse(past_types),
-              held_items: JSON.parse(held_items),
-              game_indices: JSON.parse(game_indices),
-              forms: JSON.parse(forms),
-              cries: JSON.parse(cries),
-              is_default: is_default === 1,
-              order: pokemon_order,
-              weaknesses: JSON.parse(weaknesses),
-            };
-
-            return parsedData;
-          }),
-        );
+          return;
+        });
 
         setForms(pokemonForms.filter(Boolean) as PokemonDTO[]);
       }
     } catch (error) {
       console.error('Error fetching forms: ', error);
-      return null;
-    } finally {
-      setLoading(false);
+      return [];
     }
-  }, [formatName, name, pokemon.name]);
+  }, [id, name, pokemonList]);
 
   const renderItem = useCallback(
     ({ item }: { item: PokemonDTO }) => {
@@ -113,20 +81,12 @@ function Forms({ pokemon, onPress }: FormsProps): JSX.Element {
   );
 
   const renderEmpty = useMemo(() => {
-    if (loading) {
-      return (
-        <View>
-          <Loader height={70} width={70} loadingText="Loading forms..." />
-        </View>
-      );
-    }
-
     return (
       <View>
         <Text>No forms found!</Text>
       </View>
     );
-  }, [loading]);
+  }, []);
 
   const renderForms = useMemo(
     () => (
@@ -143,8 +103,14 @@ function Forms({ pokemon, onPress }: FormsProps): JSX.Element {
   );
 
   useEffect(() => {
-    getPokemonEvolutionChain();
-  }, [getPokemonEvolutionChain]);
+    if (is_default) {
+      getDefaultPokemonForms();
+    }
+
+    if (!is_default) {
+      getNotDefaultPokemonForms();
+    }
+  }, [getDefaultPokemonForms, getNotDefaultPokemonForms, is_default]);
 
   return (
     <View style={styles.fourthBlockInfoContainer}>

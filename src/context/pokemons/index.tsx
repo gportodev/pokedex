@@ -12,6 +12,10 @@ import { PokemonsDTO } from '@/dtos/PokemonsDTO';
 import { Alert } from 'react-native';
 import { usePokemonDatabase } from '@/database/usePokemonDatabase';
 import _ from 'lodash';
+import { formatNameToShow } from '@/common/utils/pokemon';
+import * as FileSystem from 'expo-file-system';
+import { PokemonSpeciesDTO } from '@/dtos/PokemonSpeciesDTO';
+import { PokemonEvolutionChainDTO } from '@/dtos/PokemonEvolutionChainDTO';
 
 type PokemonProps = {
   children: ReactNode;
@@ -19,6 +23,7 @@ type PokemonProps = {
 
 type PokemonListContext = {
   pokemonList: PokemonDTO[];
+  setPokemonList: React.Dispatch<React.SetStateAction<PokemonDTO[]>>;
   loading: boolean;
   pokemonLength: number;
 };
@@ -27,6 +32,7 @@ const defaultValue: PokemonListContext = {
   pokemonList: [],
   loading: false,
   pokemonLength: 0,
+  setPokemonList: () => {},
 };
 
 const PokemonContext = createContext(defaultValue);
@@ -37,11 +43,78 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
   const [loading, setLoading] = useState(false);
   const pokemonDatabase = usePokemonDatabase();
 
-  const formatName = useCallback((name: string) => {
-    const formattedName = name.replace(/-/g, ' ');
+  const saveImage = async (imageUrl: string, imageName: string) => {
+    try {
+      // Define the path where the image will be saved
+      const fileUri = `${FileSystem.documentDirectory}${imageName}.png`;
 
-    return formattedName;
-  }, []);
+      // Download the image
+      const downloadResumable = FileSystem.createDownloadResumable(
+        imageUrl,
+        fileUri,
+      );
+
+      const { uri } = await downloadResumable.downloadAsync();
+
+      return uri; // Return the local URI for future use
+    } catch (error) {
+      return null;
+    }
+  };
+
+  const getPokemonEvolutionChain = useCallback(
+    async (name: string, id: number) => {
+      try {
+        const speciesResponse = await api.get<PokemonSpeciesDTO>(
+          `/pokemon-species/${id}`,
+        );
+
+        const { url } = speciesResponse.data.evolution_chain;
+
+        const evolutionResponse = await api.get<PokemonEvolutionChainDTO>(url);
+
+        const { chain } = evolutionResponse.data;
+
+        let evolutions: string[] = [];
+
+        let currentEvolution = chain;
+
+        while (currentEvolution) {
+          const { evolves_to, species } = currentEvolution;
+
+          const noDuplicates = evolutions.find(
+            evolution => evolution === species.name,
+          );
+
+          if (species.name !== name && species.name !== noDuplicates) {
+            evolutions.push(species.name);
+          }
+
+          if (evolves_to.length === 0) {
+            break;
+          }
+
+          if (evolves_to.length > 1) {
+            const evolvesToFiltered = evolves_to.map(
+              evolution => evolution.species.name,
+            );
+
+            evolutions.splice(0, evolutions.length);
+
+            evolutions = [...evolvesToFiltered];
+          }
+
+          currentEvolution = currentEvolution.evolves_to[0];
+        }
+
+        return evolutions;
+      } catch (error) {
+        console.error('Error fetching evolution chain: ', error);
+        return [];
+      }
+    },
+    [],
+  );
 
   const fetchAllPokemon = useCallback(async () => {
     try {
@@ -65,6 +138,7 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
             );
 
             const {
+              id,
               name,
               types,
               sprites,
@@ -114,16 +188,27 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
 
             const flattenedWeaknesses = [...new Set(pokemonWeaknesses.flat())];
 
+            const imagePath = await saveImage(
+              sprites.other['official-artwork'].front_default,
+              name,
+            );
+
+            if (!imagePath) return null;
+
+            const pokemonEvolutions =
+              id > 1025 ? [] : await getPokemonEvolutionChain(name, id);
+
             const dataToShow = {
               ...pokemonInfo.data,
-              name: formatName(name),
-              avatar: sprites.other['official-artwork'].front_default,
+              displayName: formatNameToShow(name),
+              avatar: imagePath,
               weaknesses: flattenedWeaknesses,
               stats: formattedStatsName,
+              evolutions: pokemonEvolutions,
             };
 
             const dataToStore = {
-              ...dataToShow,
+              ...pokemonInfo.data,
               types: JSON.stringify(types),
               sprites: JSON.stringify(sprites),
               stats: JSON.stringify(formattedStatsName),
@@ -137,7 +222,10 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
               cries: JSON.stringify(cries),
               is_default: is_default ? 1 : 0,
               pokemon_order: order,
+              displayName: formatNameToShow(name),
               weaknesses: JSON.stringify(flattenedWeaknesses),
+              avatar: JSON.stringify(imagePath),
+              evolutions: JSON.stringify(pokemonEvolutions),
             };
 
             await pokemonDatabase.create(dataToStore);
@@ -159,13 +247,7 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
     } finally {
       setLoading(false);
     }
-  }, [formatName, pokemonDatabase]);
-
-  const countUniqueSpecies = useCallback(() => {
-    const total = _.uniqBy(pokemonList, pokemon => pokemon.species.name).length;
-
-    setPokemonLength(total);
-  }, [pokemonList]);
+  }, [getPokemonEvolutionChain, pokemonDatabase]);
 
   const getPokemonsList = useCallback(async (): Promise<void> => {
     try {
@@ -190,6 +272,8 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
             is_default,
             pokemon_order,
             weaknesses,
+            avatar,
+            evolutions,
           } = row;
 
           const formatted: PokemonDTO = {
@@ -208,6 +292,8 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
             is_default: is_default === 1,
             order: pokemon_order,
             weaknesses: JSON.parse(weaknesses),
+            avatar: JSON.parse(avatar),
+            evolutions: JSON.parse(evolutions),
           };
 
           return formatted;
@@ -224,6 +310,12 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
     }
   }, [fetchAllPokemon, pokemonDatabase]);
 
+  const countUniqueSpecies = useCallback(() => {
+    const total = _.uniqBy(pokemonList, pokemon => pokemon.species.name).length;
+
+    setPokemonLength(total);
+  }, [pokemonList]);
+
   useEffect(() => {
     getPokemonsList();
   }, []);
@@ -232,10 +324,12 @@ function PokemonProvider({ children }: PokemonProps): JSX.Element {
     if (pokemonList.length > 0) {
       countUniqueSpecies();
     }
-  }, [countUniqueSpecies, pokemonList.length]);
+  }, [countUniqueSpecies, pokemonList, pokemonList.length]);
 
   return (
-    <PokemonContext.Provider value={{ pokemonList, loading, pokemonLength }}>
+    <PokemonContext.Provider
+      value={{ pokemonList, loading, pokemonLength, setPokemonList }}
+    >
       {children}
     </PokemonContext.Provider>
   );

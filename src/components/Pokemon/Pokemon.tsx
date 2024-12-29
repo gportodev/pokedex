@@ -14,7 +14,7 @@ type PokemonProps = {
 };
 
 function Pokemon({ item, onPress }: PokemonProps): JSX.Element {
-  const { id, name, avatar, types } = item;
+  const { id, displayName, avatar, types } = item;
 
   const pokemonTypes = useMemo(() => {
     if (!types || types.length === 0) return null;
@@ -48,7 +48,7 @@ function Pokemon({ item, onPress }: PokemonProps): JSX.Element {
       <View style={styles.content}>
         <Text style={styles.data}>#{id}</Text>
 
-        <Text style={styles.data}>{name}</Text>
+        <Text style={styles.data}>{displayName}</Text>
 
         <View style={styles.typeContainer}>{pokemonTypes}</View>
       </View>

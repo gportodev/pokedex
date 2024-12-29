@@ -5,6 +5,7 @@ export async function initializeDatabase(database: SQLite.SQLiteDatabase) {
     CREATE TABLE IF NOT EXISTS pokemons (
       id INTEGER PRIMARY KEY NOT NULL,
       name TEXT,
+      displayName TEXT,
       height INTEGER,
       weight INTEGER,
       types TEXT,
@@ -23,7 +24,8 @@ export async function initializeDatabase(database: SQLite.SQLiteDatabase) {
       forms TEXT,
       cries TEXT,
       base_experience INTEGER,
-      weaknesses TEXT
+      weaknesses TEXT,
+      evolutions TEXT
     );
   `);
 }

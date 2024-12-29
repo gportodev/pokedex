@@ -239,4 +239,23 @@ function getCardFromType(type: PokemonType): TypeCardColor {
   return typeCardColorMap[type];
 }
 
-export { getTagFromType, getIconFromType, PokemonType, getCardFromType };
+function formatNameToShow(name: string) {
+  const formattedName = name.replace(/-/g, ' ');
+
+  return formattedName;
+}
+
+function formatNameToSearch(name: string) {
+  const formattedName = name.replace(/''/g, '-');
+
+  return formattedName;
+}
+
+export {
+  getTagFromType,
+  getIconFromType,
+  PokemonType,
+  getCardFromType,
+  formatNameToShow,
+  formatNameToSearch,
+};

@@ -3,6 +3,7 @@ import { useSQLiteContext } from 'expo-sqlite';
 export type PokemonDatabase = {
   id: number;
   name: string;
+  displayName: string;
   height: number;
   weight: number;
   types: string;
@@ -22,6 +23,7 @@ export type PokemonDatabase = {
   cries: string;
   base_experience: number;
   weaknesses: string;
+  evolutions: string;
 };
 
 export function usePokemonDatabase() {
@@ -31,6 +33,7 @@ export function usePokemonDatabase() {
     const {
       id,
       name,
+      displayName,
       height,
       weight,
       types,
@@ -50,12 +53,14 @@ export function usePokemonDatabase() {
       cries,
       base_experience,
       weaknesses,
+      evolutions,
     } = data;
 
     const statement = await database.prepareAsync(`
       INSERT INTO pokemons (
       id,
       name,
+      displayName,
       height,
       weight,
       types,
@@ -74,10 +79,12 @@ export function usePokemonDatabase() {
       forms,
       cries,
       base_experience,
-      weaknesses)
+      weaknesses,
+      evolutions)
       VALUES (
       $id,
       $name,
+      $displayName,
       $height,
       $weight,
       $types,
@@ -96,13 +103,15 @@ export function usePokemonDatabase() {
       $forms,
       $cries,
       $base_experience,
-      $weaknesses)
+      $weaknesses,
+      $evolutions)
     `);
 
     try {
       await statement.executeAsync({
         $id: id,
         $name: name,
+        $displayName: displayName,
         $height: height,
         $weight: weight,
         $types: types,
@@ -122,6 +131,7 @@ export function usePokemonDatabase() {
         $cries: cries,
         $base_experience: base_experience,
         $weaknesses: weaknesses,
+        $evolutions: evolutions,
       });
     } catch (error) {
       throw error;
@@ -144,7 +154,7 @@ export function usePokemonDatabase() {
 
   async function searchOne(name: string) {
     try {
-      const query = 'SELECT * FROM pokemons WHERE name = ?';
+      const query = 'SELECT * FROM pokemons WHERE displayName = ?';
 
       const response = await database.getFirstAsync<PokemonDatabase>(
         query,
@@ -157,5 +167,20 @@ export function usePokemonDatabase() {
     }
   }
 
-  return { create, searchAll, searchOne };
+  async function updatePokemonEvolutions(name: string, evolutions: string) {
+    try {
+      const query = 'UPDATE pokemons SET evolutions = ? WHERE name = ?';
+
+      const response = await database.runAsync(query, [evolutions, name]);
+
+      console.log('RESPONSE');
+      console.log(JSON.stringify(response, undefined, 2));
+
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  return { create, searchAll, searchOne, updatePokemonEvolutions };
 }
