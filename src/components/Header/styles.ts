@@ -1,15 +1,15 @@
+import colors from '@/constants/colors';
 import { Fonts } from '@/constants/fonts';
-import theme from '@/style/theme';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   header: {
     gap: 24,
     elevation: 5,
-    backgroundColor: theme.greyish_blue,
+    backgroundColor: colors.greyish_blue,
     borderBottomWidth: 10,
-    borderBottomColor: theme.greyish_blue,
-    shadowColor: theme.black,
+    borderBottomColor: colors.greyish_blue,
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
@@ -24,7 +24,7 @@ export default StyleSheet.create({
   infoText: {
     fontFamily: Fonts.montserrat_semibold,
     fontSize: 18,
-    color: theme.gray_bold,
+    color: colors.gray_bold,
     textAlign: 'center',
   },
 });

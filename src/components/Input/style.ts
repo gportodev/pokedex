@@ -1,15 +1,15 @@
+import colors from '@/constants/colors';
 import { Fonts } from '@/constants/fonts';
-import theme from '@/style/theme';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: {
     height: 56,
     justifyContent: 'center',
-    backgroundColor: theme.white,
+    backgroundColor: colors.white,
     borderRadius: 100,
     borderWidth: 1,
-    borderColor: theme.greyish_blue,
+    borderColor: colors.greyish_blue,
   },
   input: {
     flex: 1,
@@ -18,7 +18,7 @@ export default StyleSheet.create({
     paddingLeft: 50,
   },
   icon: {
-    backgroundColor: theme.pastel_blue,
+    backgroundColor: colors.pastel_blue,
     width: 42,
     height: 42,
     borderRadius: 100,

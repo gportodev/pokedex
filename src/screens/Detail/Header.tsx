@@ -9,7 +9,7 @@ import {
 } from '@/common/utils/pokemon';
 import { PokemonDTO } from '@/dtos/PokemonDTO';
 import Ionicon from '@expo/vector-icons/Ionicons';
-import theme from '@/style/theme';
+import colors from '@/constants/colors';
 
 type HeaderProps = {
   item: PokemonDTO;
@@ -67,7 +67,7 @@ function Header({ item, onPress }: HeaderProps) {
       </LinearGradient>
 
       <TouchableOpacity onPress={onPress} style={styles.backButtonContainer}>
-        <Ionicon name="arrow-back" size={24} color={theme.black} />
+        <Ionicon name="arrow-back" size={24} color={colors.black} />
       </TouchableOpacity>
 
       <Image source={{ uri: item.avatar }} style={styles.headerPokemonAvatar} />

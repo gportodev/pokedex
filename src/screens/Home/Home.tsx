@@ -5,8 +5,8 @@ import { SafeAreaView } from 'react-native';
 
 import { HomeProps } from '@/routes/types';
 import { PokemonDTO } from '@/dtos/PokemonDTO';
-import theme from '@/style/theme';
 import { StatusBar } from 'expo-status-bar';
+import colors from '@/constants/colors';
 
 function Home({ navigation }: HomeProps): JSX.Element {
   const onPress = useCallback(
@@ -21,7 +21,7 @@ function Home({ navigation }: HomeProps): JSX.Element {
       <SafeAreaView
         style={{
           flex: 1,
-          backgroundColor: theme.white,
+          backgroundColor: colors.white,
         }}
       >
         <StatusBar style="dark" />

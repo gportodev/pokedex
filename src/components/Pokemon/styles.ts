@@ -1,5 +1,5 @@
+import colors from '@/constants/colors';
 import { Fonts } from '@/constants/fonts';
-import theme from '@/style/theme';
 import { Dimensions, StyleSheet } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -10,9 +10,9 @@ export default StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.white,
+    backgroundColor: colors.white,
     elevation: 5,
-    shadowColor: theme.black,
+    shadowColor: colors.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
@@ -39,7 +39,7 @@ export default StyleSheet.create({
   data: {
     fontFamily: Fonts.inter_medium,
     fontSize: 16,
-    color: theme.dark_grayish,
+    color: colors.dark_grayish,
     textTransform: 'capitalize',
     flexShrink: 1,
   },

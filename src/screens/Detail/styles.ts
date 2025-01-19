@@ -1,5 +1,5 @@
+import colors from '@/constants/colors';
 import { Fonts } from '@/constants/fonts';
-import theme from '@/style/theme';
 import { Dimensions, StyleSheet } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -7,7 +7,7 @@ const { width } = Dimensions.get('window');
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.white,
+    backgroundColor: colors.white,
   },
   headerContainer: {
     height: 250,
@@ -73,14 +73,14 @@ export default StyleSheet.create({
   infoHeaderName: {
     fontSize: 24,
     fontFamily: Fonts.montserrat_bold,
-    color: theme.dark_grayish,
+    color: colors.dark_grayish,
     textTransform: 'capitalize',
     flexShrink: 1,
   },
   infoHeaderId: {
     fontSize: 18,
     fontFamily: Fonts.montserrat_regular,
-    color: theme.gray_bold,
+    color: colors.gray_bold,
     textTransform: 'capitalize',
   },
   infoSubHeaderContainer: {

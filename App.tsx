@@ -1,7 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { ThemeProvider } from 'styled-components';
-import theme from '@/style/theme';
+
 import { Routes } from '@/routes';
 import useCachedResources from '@/hooks/useCachedResources';
 import { PokemonProvider } from '@/context/pokemons';
@@ -18,12 +17,10 @@ export default function App(): JSX.Element {
 
   return (
     <SQLiteProvider databaseName="pokemon.db" onInit={initializeDatabase}>
-      <ThemeProvider theme={theme}>
-        <StatusBar />
-        <PokemonProvider>
-          <Routes />
-        </PokemonProvider>
-      </ThemeProvider>
+      <StatusBar />
+      <PokemonProvider>
+        <Routes />
+      </PokemonProvider>
     </SQLiteProvider>
   );
 }

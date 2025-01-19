@@ -1,5 +1,5 @@
+import colors from '@/constants/colors';
 import { Fonts } from '@/constants/fonts';
-import theme from '@/style/theme';
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
@@ -18,7 +18,7 @@ export default StyleSheet.create({
   loadingText: {
     fontFamily: Fonts.montserrat_semibold,
     fontSize: 18,
-    color: theme.gray_bold,
+    color: colors.gray_bold,
     textAlign: 'center',
   },
 });
